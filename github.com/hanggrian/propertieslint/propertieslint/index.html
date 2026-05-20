@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="doc2go">
+    <link href="../../../../_/css/main.css" rel="stylesheet" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../../../_/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../../_/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../../../_/icons/favicon-16x16.png">
+    <link rel="shortcut icon" href="../../../../_/icons/favicon.ico"><title>propertieslint</title>
+</head>
+  <body>
+    <nav>
+        <a href="../../..">github.com</a>/<a href="../..">hanggrian</a>/<a href="..">propertieslint</a>/propertieslint<span class="navbar-right">
+          <a href="../../../..">Root</a> | <a href="#pkg-index">Index</a></span>
+      </nav>
+    <main>
+<h2 id="pkg-overview">package propertieslint</h2>
+
+<pre class="chroma"><span class="kn">import</span><span class="w"> </span><span class="s">&#34;github.com/hanggrian/propertieslint/propertieslint&#34;</span></pre>
+<h3 id="pkg-index">Index</h3>
+<ul>
+  <li><a href="#pkg-constants">Constants</a></li><li><a href="#ResolveConfigPath">func ResolveConfigPath(explicit string) string</a></li>
+  <li>
+      <a href="#Config">type Config</a>
+      <ul>
+          <li><a href="#DefaultConfig">func DefaultConfig() Config</a></li>
+          <li><a href="#LoadConfig">func LoadConfig(path string) (Config, error)</a></li>
+          </ul>
+      </li>
+  <li>
+      <a href="#Issue">type Issue</a>
+      <ul>
+          <li><a href="#LintFile">func LintFile(path string, config Config) ([]Issue, error)</a></li>
+          </ul>
+      </li>
+  <li>
+      <a href="#Result">type Result</a>
+      <ul>
+          <li><a href="#Targets">func Targets(paths []string, config Config) (Result, error)</a></li>
+          </ul>
+      </li>
+  </ul><h3 id="pkg-constants">Constants</h3>
+  
+  
+  
+  <pre class="chroma"><span class="kd">const</span><span class="w"> </span><span id="DefaultConfigFile"><span class="nx">DefaultConfigFile</span></span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#34;propertieslint.json&#34;</span></pre>
+  <h3 id="pkg-functions">Functions</h3>
+  
+  <h4 id="ResolveConfigPath">func ResolveConfigPath</h4>
+  
+  <pre class="chroma"><span class="kd">func</span><span class="w"> </span><span class="nf">ResolveConfigPath</span><span class="p">(</span><span class="nx">explicit</span><span class="w"> </span><a href="https://pkg.go.dev/builtin#string"><span class="kt">string</span></a><span class="p">)</span><span class="w"> </span><a href="https://pkg.go.dev/builtin#string"><span class="kt">string</span></a></pre>
+  <h3 id="pkg-types">Types</h3>
+  
+  <h4 id="Config">type Config</h4>
+    
+    <pre class="chroma"><span class="kd">type</span><span class="w"> </span><span class="nx">Config</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">	</span><span id="Config.DuplicateBlankLine"><span class="nx">DuplicateBlankLine</span></span><span class="w">       </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.DuplicateKey"><span class="nx">DuplicateKey</span></span><span class="w">             </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.InvalidEscape"><span class="nx">InvalidEscape</span></span><span class="w">            </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.MissingSeparator"><span class="nx">MissingSeparator</span></span><span class="w">         </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.MissingValue"><span class="nx">MissingValue</span></span><span class="w">             </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.NoLeadingBlankLine"><span class="nx">NoLeadingBlankLine</span></span><span class="w">       </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.TrailingNewline"><span class="nx">TrailingNewline</span></span><span class="w">          </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.UnterminatedContinuation"><span class="nx">UnterminatedContinuation</span></span><span class="w"> </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.UntrimmedEntry"><span class="nx">UntrimmedEntry</span></span><span class="w">           </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="p">}</span></pre>
+    <h5 id="DefaultConfig">func DefaultConfig</h5>
+  
+  <pre class="chroma"><span class="kd">func</span><span class="w"> </span><span class="nf">DefaultConfig</span><span class="p">()</span><span class="w"> </span><a href="#Config"><span class="nx">Config</span></a></pre>
+  <h5 id="LoadConfig">func LoadConfig</h5>
+  
+  <pre class="chroma"><span class="kd">func</span><span class="w"> </span><span class="nf">LoadConfig</span><span class="p">(</span><span class="nx">path</span><span class="w"> </span><a href="https://pkg.go.dev/builtin#string"><span class="kt">string</span></a><span class="p">)</span><span class="w"> </span><span class="p">(</span><a href="#Config"><span class="nx">Config</span></a><span class="p">,</span><span class="w"> </span><a href="https://pkg.go.dev/builtin#error"><span class="kt">error</span></a><span class="p">)</span></pre>
+  <h4 id="Issue">type Issue</h4>
+    
+    <pre class="chroma"><span class="kd">type</span><span class="w"> </span><span class="nx">Issue</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">	</span><span id="Issue.Path"><span class="nx">Path</span></span><span class="w">    </span><a href="https://pkg.go.dev/builtin#string"><span class="kt">string</span></a><span class="w">
+</span><span class="w">	</span><span id="Issue.Line"><span class="nx">Line</span></span><span class="w">    </span><a href="https://pkg.go.dev/builtin#int"><span class="kt">int</span></a><span class="w">
+</span><span class="w">	</span><span id="Issue.Column"><span class="nx">Column</span></span><span class="w">  </span><a href="https://pkg.go.dev/builtin#int"><span class="kt">int</span></a><span class="w">
+</span><span class="w">	</span><span id="Issue.Message"><span class="nx">Message</span></span><span class="w"> </span><a href="https://pkg.go.dev/builtin#string"><span class="kt">string</span></a><span class="w">
+</span><span class="p">}</span></pre>
+    <h5 id="LintFile">func LintFile</h5>
+  
+  <pre class="chroma"><span class="kd">func</span><span class="w"> </span><span class="nf">LintFile</span><span class="p">(</span><span class="nx">path</span><span class="w"> </span><a href="https://pkg.go.dev/builtin#string"><span class="kt">string</span></a><span class="p">,</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><a href="#Config"><span class="nx">Config</span></a><span class="p">)</span><span class="w"> </span><span class="p">([]</span><a href="#Issue"><span class="nx">Issue</span></a><span class="p">,</span><span class="w"> </span><a href="https://pkg.go.dev/builtin#error"><span class="kt">error</span></a><span class="p">)</span></pre>
+  <h4 id="Result">type Result</h4>
+    
+    <pre class="chroma"><span class="kd">type</span><span class="w"> </span><span class="nx">Result</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">	</span><span id="Result.CheckedFiles"><span class="nx">CheckedFiles</span></span><span class="w"> </span><a href="https://pkg.go.dev/builtin#int"><span class="kt">int</span></a><span class="w">
+</span><span class="w">	</span><span id="Result.Issues"><span class="nx">Issues</span></span><span class="w">       </span><span class="p">[]</span><a href="#Issue"><span class="nx">Issue</span></a><span class="w">
+</span><span class="p">}</span></pre>
+    <h5 id="Targets">func Targets</h5>
+  
+  <pre class="chroma"><span class="kd">func</span><span class="w"> </span><span class="nf">Targets</span><span class="p">(</span><span class="nx">paths</span><span class="w"> </span><span class="p">[]</span><a href="https://pkg.go.dev/builtin#string"><span class="kt">string</span></a><span class="p">,</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><a href="#Config"><span class="nx">Config</span></a><span class="p">)</span><span class="w"> </span><span class="p">(</span><a href="#Result"><span class="nx">Result</span></a><span class="p">,</span><span class="w"> </span><a href="https://pkg.go.dev/builtin#error"><span class="kt">error</span></a><span class="p">)</span></pre>
+  </main>
+    <hr>
+    <footer>
+      <small id="generated-by-footer">
+        Generated with <a href="https://abhinav.github.io/doc2go/">doc2go</a>
+      </small>
+    </footer>
+    <script src="../../../../_/js/permalink.js"></script></body>
+</html>
