@@ -25,6 +25,25 @@ func splitKeyValue(line string) (key string, value string, separatorFound bool) 
 	return strings.TrimSpace(line), "", false
 }
 
+func splitKeyValueRaw(line string) (key string, value string, separatorFound bool) {
+	escaped := false
+	for index := 0; index < len(line); index++ {
+		current := line[index]
+		if escaped {
+			escaped = false
+			continue
+		}
+		if current == '\\' {
+			escaped = true
+			continue
+		}
+		if current == '=' {
+			return line[:index], line[index+1:], true
+		}
+	}
+	return line, "", false
+}
+
 func endsWithContinuation(line string) bool {
 	backslashes := 0
 	for index := len(line) - 1; index >= 0; index-- {

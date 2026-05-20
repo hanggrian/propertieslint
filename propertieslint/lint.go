@@ -60,7 +60,23 @@ func LintFile(path string, config Config) ([]Issue, error) {
 	}
 	defer file.Close()
 
-	return lintReader(path, file, config)
+	issues, err := lintReader(path, file, config)
+	if err != nil {
+		return nil, err
+	}
+
+	if config.TrailingNewline {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			return nil, err
+		}
+		if len(data) > 0 && data[len(data)-1] != '\n' {
+			lineCount := strings.Count(string(data), "\n") + 1
+			issues = append(issues, *trailingNewlineIssue(path, lineCount))
+		}
+	}
+
+	return issues, nil
 }
 
 func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
@@ -70,11 +86,14 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 	seenKeys := map[string]int{}
 	issues := make([]Issue, 0)
 	logical := strings.Builder{}
+	logicalRaw := strings.Builder{}
 	logicalStartLine := 0
 	continuing := false
 	lineNumber := 0
+	lastBlankLine := -2
+	isFirstLine := true
 
-	flush := func() error {
+	flush := func(rawLogical string) error {
 		if logical.Len() == 0 {
 			return nil
 		}
@@ -130,6 +149,13 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 			seenKeys[normalizedKey] = logicalStartLine
 		}
 
+		if config.UntrimmedEntry {
+			origKey, origValue, _ := splitKeyValueRaw(rawLogical)
+			for _, issue := range untrimmedEntryIssue(path, logicalStartLine, origKey, origValue) {
+				issues = append(issues, *issue)
+			}
+		}
+
 		return nil
 	}
 
@@ -139,9 +165,27 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 
 		if !continuing {
 			trimmed := strings.TrimLeft(rawLine, " \t\f")
-			if trimmed == "" || trimmed[0] == '#' || trimmed[0] == '!' {
+
+			if trimmed == "" {
+				if config.DuplicateBlankLine && isFirstLine {
+					if config.NoLeadingBlankLine {
+						issues = append(issues, *noLeadingBlankLineIssue(path))
+					}
+				}
+				if config.DuplicateBlankLine && lastBlankLine == lineNumber-1 {
+					issues = append(issues, *duplicateBlankLineIssue(path, lineNumber))
+				}
+				lastBlankLine = lineNumber
+				isFirstLine = false
 				continue
 			}
+
+			if trimmed[0] == '#' || trimmed[0] == '!' {
+				isFirstLine = false
+				continue
+			}
+
+			isFirstLine = false
 			logicalStartLine = lineNumber
 		} else {
 			rawLine = strings.TrimLeft(rawLine, " \t\f")
@@ -149,16 +193,19 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 
 		if endsWithContinuation(rawLine) {
 			logical.WriteString(rawLine[:len(rawLine)-1])
+			logicalRaw.WriteString(rawLine[:len(rawLine)-1])
 			continuing = true
 			continue
 		}
 
 		logical.WriteString(rawLine)
+		logicalRaw.WriteString(rawLine)
 		continuing = false
 
-		if err := flush(); err != nil {
+		if err := flush(logicalRaw.String()); err != nil {
 			return nil, err
 		}
+		logicalRaw.Reset()
 	}
 
 	if err := scanner.Err(); err != nil {

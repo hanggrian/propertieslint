@@ -78,3 +78,99 @@ func assertIssue(t *testing.T, issues []Issue, line int, messageSubstring string
 
 	t.Fatalf("expected issue on line %d containing %q, got %#v", line, messageSubstring, issues)
 }
+
+func TestLintReaderFlagsUntrimmedEntry(t *testing.T) {
+	const sample = "key=value\n" +
+		" key=value\n" +
+		"key =value\n" +
+		"key= value\n" +
+		"key=value \n"
+
+	config := DefaultConfig()
+	config.DuplicateKey = false
+
+	issues, err := lintReader("sample.properties", strings.NewReader(sample), config)
+	if err != nil {
+		t.Fatalf("lintReader returned error: %v", err)
+	}
+
+	assertIssue(t, issues, 2, "key has leading whitespace")
+	assertIssue(t, issues, 3, "key has trailing whitespace")
+	assertIssue(t, issues, 4, "value has leading whitespace")
+	assertIssue(t, issues, 5, "value has trailing whitespace")
+}
+
+func TestLintReaderFlagsDuplicateBlankLine(t *testing.T) {
+	const sample = "key=value\n" +
+		"\n" +
+		"\n" +
+		"key2=value2\n"
+
+	issues, err := lintReader("sample.properties", strings.NewReader(sample), DefaultConfig())
+	if err != nil {
+		t.Fatalf("lintReader returned error: %v", err)
+	}
+
+	assertIssue(t, issues, 3, "duplicate blank line")
+}
+
+func TestLintReaderFlagsNoLeadingBlankLine(t *testing.T) {
+	const sample = "\n" +
+		"key=value\n"
+
+	issues, err := lintReader("sample.properties", strings.NewReader(sample), DefaultConfig())
+	if err != nil {
+		t.Fatalf("lintReader returned error: %v", err)
+	}
+
+	assertIssue(t, issues, 1, "leading blank line")
+}
+
+func TestLintFileFlagsTrailingNewline(t *testing.T) {
+	const sample = "key=value"
+
+	issues, err := lintReader("sample.properties", strings.NewReader(sample), DefaultConfig())
+	if err != nil {
+		t.Fatalf("lintReader returned error: %v", err)
+	}
+
+	if len(issues) > 0 {
+		t.Fatalf("lintReader should not report issues for missing trailing newline, got %#v", issues)
+	}
+}
+
+func TestLintReaderCanDisableUntrimmedEntry(t *testing.T) {
+	const sample = " key = value \n"
+
+	config := DefaultConfig()
+	config.UntrimmedEntry = false
+
+	issues, err := lintReader("sample.properties", strings.NewReader(sample), config)
+	if err != nil {
+		t.Fatalf("lintReader returned error: %v", err)
+	}
+
+	for _, issue := range issues {
+		if strings.Contains(issue.Message, "whitespace") {
+			t.Fatalf("did not expect whitespace issue, got %#v", issues)
+		}
+	}
+}
+
+func TestLintReaderCanDisableDuplicateBlankLine(t *testing.T) {
+	const sample = "key=value\n\n\n"
+
+	config := DefaultConfig()
+	config.DuplicateBlankLine = false
+
+	issues, err := lintReader("sample.properties", strings.NewReader(sample), config)
+	if err != nil {
+		t.Fatalf("lintReader returned error: %v", err)
+	}
+
+	for _, issue := range issues {
+		if strings.Contains(issue.Message, "duplicate blank line") {
+			t.Fatalf("did not expect duplicate blank line issue, got %#v", issues)
+		}
+	}
+}

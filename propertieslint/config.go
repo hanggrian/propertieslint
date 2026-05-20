@@ -14,6 +14,10 @@ type Config struct {
 	DuplicateKey             bool
 	InvalidEscape            bool
 	UnterminatedContinuation bool
+	UntrimmedEntry           bool
+	DuplicateBlankLine       bool
+	NoLeadingBlankLine       bool
+	TrailingNewline          bool
 }
 
 func DefaultConfig() Config {
@@ -23,6 +27,10 @@ func DefaultConfig() Config {
 		DuplicateKey:             true,
 		InvalidEscape:            true,
 		UnterminatedContinuation: true,
+		UntrimmedEntry:           true,
+		DuplicateBlankLine:       true,
+		NoLeadingBlankLine:       true,
+		TrailingNewline:          true,
 	}
 }
 
@@ -54,6 +62,14 @@ func LoadConfig(path string) (Config, error) {
 			config.InvalidEscape = enabled
 		case "unterminated-line-continuation":
 			config.UnterminatedContinuation = enabled
+		case "untrimmed-entry":
+			config.UntrimmedEntry = enabled
+		case "duplicate-blank-line":
+			config.DuplicateBlankLine = enabled
+		case "no-leading-blank-line":
+			config.NoLeadingBlankLine = enabled
+		case "trailing-newline":
+			config.TrailingNewline = enabled
 		default:
 			return Config{}, fmt.Errorf("unknown rule %q", name)
 		}
