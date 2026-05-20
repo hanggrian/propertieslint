@@ -9,20 +9,28 @@ import (
 const DefaultConfigFile = "propertieslint.json"
 
 type Config struct {
-	MissingSeparator         bool
-	MissingValue             bool
+	DuplicateBlankLine       bool
 	DuplicateKey             bool
 	InvalidEscape            bool
+	MissingSeparator         bool
+	MissingValue             bool
+	NoLeadingBlankLine       bool
+	TrailingNewline          bool
 	UnterminatedContinuation bool
+	UntrimmedEntry           bool
 }
 
 func DefaultConfig() Config {
 	return Config{
-		MissingSeparator:         true,
-		MissingValue:             true,
+		DuplicateBlankLine:       true,
 		DuplicateKey:             true,
 		InvalidEscape:            true,
+		MissingSeparator:         true,
+		MissingValue:             true,
+		NoLeadingBlankLine:       true,
+		TrailingNewline:          true,
 		UnterminatedContinuation: true,
+		UntrimmedEntry:           true,
 	}
 }
 
@@ -44,16 +52,24 @@ func LoadConfig(path string) (Config, error) {
 
 	for name, enabled := range rules {
 		switch name {
-		case "missing-key-value-separator":
-			config.MissingSeparator = enabled
-		case "missing-value":
-			config.MissingValue = enabled
+		case "duplicate-blank-line":
+			config.DuplicateBlankLine = enabled
 		case "duplicate-key":
 			config.DuplicateKey = enabled
 		case "invalid-escape":
 			config.InvalidEscape = enabled
+		case "missing-key-value-separator":
+			config.MissingSeparator = enabled
+		case "missing-value":
+			config.MissingValue = enabled
+		case "no-leading-blank-line":
+			config.NoLeadingBlankLine = enabled
+		case "trailing-newline":
+			config.TrailingNewline = enabled
 		case "unterminated-line-continuation":
 			config.UnterminatedContinuation = enabled
+		case "untrimmed-entry":
+			config.UntrimmedEntry = enabled
 		default:
 			return Config{}, fmt.Errorf("unknown rule %q", name)
 		}

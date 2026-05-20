@@ -57,7 +57,7 @@ func Execute() error {
 	}
 
 	for _, issue := range result.Issues {
-		fmt.Printf("%s:%d: %s\n", issue.Path, issue.Line, issue.Message)
+		fmt.Printf("%s:%d:%d: %s\n", issue.Path, issue.Line, issue.Column, issue.Message)
 	}
 
 	if len(result.Issues) > 0 {

@@ -7,6 +7,7 @@ func unterminatedContinuationIssue(path string, line int, continuing bool) *Issu
 	return &Issue{
 		Path:    path,
 		Line:    line,
+		Column:  1,
 		Message: "unterminated line continuation",
 	}
 }
