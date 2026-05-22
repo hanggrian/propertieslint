@@ -1,4 +1,4 @@
-package propertieslint
+package linter
 
 func duplicateBlankLineIssue(path string, line int) *Issue {
 	return &Issue{

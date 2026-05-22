@@ -1,4 +1,4 @@
-package propertieslint
+package linter
 
 import (
 	"errors"

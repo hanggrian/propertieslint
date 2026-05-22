@@ -1,4 +1,4 @@
-package propertieslint
+package linter
 
 func unterminatedContinuationIssue(path string, line int, continuing bool) *Issue {
 	if !continuing {

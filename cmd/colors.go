@@ -6,10 +6,6 @@ func Bold(text string) string {
 	return color.New(color.Bold).Sprint(text)
 }
 
-func Dim(text string) string {
-	return color.New(color.Faint).Sprint(text)
-}
-
 func Italic(text string) string {
 	return color.New(color.Italic).Sprint(text)
 }

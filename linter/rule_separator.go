@@ -1,4 +1,4 @@
-package propertieslint
+package linter
 
 func missingSeparatorIssue(path string, line int, column int, separatorFound bool) *Issue {
 	if separatorFound {
