@@ -1,0 +1,8 @@
+[tool.poe.tasks]
+lint = "stylebook ."
+
+[dependency-groups]
+dev = [
+  "poethepoet",
+  "stylebook",
+]

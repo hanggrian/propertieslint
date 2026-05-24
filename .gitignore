@@ -2,5 +2,13 @@
 .DS_Store
 ._*
 
-# Go
+# PyCharm
+*.iml
+.idea/
+.venv/
+
+# WebStorm
+node_modules/
+
+# GoLand
 coverage.out

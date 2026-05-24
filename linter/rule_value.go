@@ -1,7 +1,8 @@
 package linter
 
 func missingValueIssue(path string, line int, column int, separatorFound bool, value string) *Issue {
-	if !separatorFound || value != "" {
+	if !separatorFound ||
+		value != "" {
 		return nil
 	}
 	return &Issue{

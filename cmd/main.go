@@ -59,7 +59,7 @@ func Execute() error {
 		case arg == "-c" || arg == "--config":
 			index++
 			if index >= len(args) {
-				return fmt.Errorf("missing value for %s", arg)
+				return fmt.Errorf("Missing value for %s", arg)
 			}
 			configPath = args[index]
 
@@ -72,8 +72,7 @@ func Execute() error {
 	}
 
 	// load config
-	configPath = linter.ResolveConfigPath(configPath)
-	config, err := linter.LoadConfig(configPath)
+	config, err := linter.LoadConfig(linter.ResolveConfigPath(configPath))
 	if err != nil {
 		return err
 	}

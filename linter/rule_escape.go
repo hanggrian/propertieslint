@@ -2,7 +2,13 @@ package linter
 
 import "fmt"
 
-func validateEscapes(path string, line int, rawLogical string, key string, value string) (string, []Issue, bool) {
+func validateEscapes(
+	path string,
+	line int,
+	rawLogical string,
+	key string,
+	value string,
+) (string, []Issue, bool) {
 	rawKey, _, _ := splitKeyValueRaw(rawLogical)
 	normalizedKey, err := unescape(key)
 	if err != nil {

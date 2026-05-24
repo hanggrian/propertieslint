@@ -7,6 +7,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  run-lint:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v6
+
+    - uses: ./.github/actions/setup-workspace
+
+    - run: just lint
+
   upload-coverage:
     runs-on: ubuntu-24.04
     steps:
@@ -14,7 +23,7 @@ jobs:
 
     - uses: ./.github/actions/setup-workspace
 
-    - run: go test -coverprofile=coverage.out ./...
+    - run: just cov
 
     - if: github.ref == 'refs/heads/main'
       uses: codecov/codecov-action@v6

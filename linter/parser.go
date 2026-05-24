@@ -19,7 +19,10 @@ func splitKeyValue(line string) (key string, value string, separatorFound bool) 
 			continue
 		}
 		if current == '=' {
-			return strings.TrimRight(line[:index], " \t\f"), strings.TrimLeft(line[index+1:], " \t\f"), true
+			return strings.TrimRight(
+					line[:index], " \t\f"),
+				strings.TrimLeft(line[index+1:], " \t\f"),
+				true
 		}
 	}
 	return strings.TrimSpace(line), "", false
@@ -48,7 +51,7 @@ func endsWithContinuation(line string) bool {
 	if len(line) == 0 {
 		return false
 	}
-	// Count consecutive trailing backslashes.
+
 	backslashes := 0
 	for index := len(line) - 1; index >= 0; index-- {
 		if line[index] != '\\' {
@@ -56,7 +59,7 @@ func endsWithContinuation(line string) bool {
 		}
 		backslashes++
 	}
-	// Treat only a single trailing backslash as a continuation marker.
+
 	return backslashes == 1
 }
 
@@ -81,14 +84,19 @@ func unescape(value string) (string, error) {
 		switch value[index] {
 		case 't':
 			builder.WriteByte('\t')
+
 		case 'n':
 			builder.WriteByte('\n')
+
 		case 'r':
 			builder.WriteByte('\r')
+
 		case 'f':
 			builder.WriteByte('\f')
+
 		case '\\', ' ', ':', '=', '#', '!':
 			builder.WriteByte(value[index])
+
 		case 'u':
 			if index+4 >= len(value) {
 				return "", errors.New("short unicode escape")
@@ -110,6 +118,7 @@ func unescape(value string) (string, error) {
 			}
 			builder.WriteRune(rune(codePoint))
 			index += 4
+
 		default:
 			builder.WriteByte(value[index])
 		}

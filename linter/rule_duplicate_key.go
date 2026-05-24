@@ -2,7 +2,13 @@ package linter
 
 import "fmt"
 
-func duplicateKeyIssue(path string, line int, column int, key string, seenKeys map[string]int) *Issue {
+func duplicateKeyIssue(
+	path string,
+	line int,
+	column int,
+	key string,
+	seenKeys map[string]int,
+) *Issue {
 	if previousLine, ok := seenKeys[key]; ok {
 		return &Issue{
 			Path:    path,

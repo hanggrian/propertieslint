@@ -6,7 +6,23 @@ runs:
   steps:
   - uses: actions/setup-go@v6
     with:
-      go-version: "1.26"
+      go-version: 1.25
+
+  - uses: astral-sh/setup-uv@v8.1.0
+    with:
+      python-version: 3.14
+      enable-cache: true
+
+  - uses: pnpm/action-setup@v6
+    with:
+      version: 11
+
+  - uses: actions/setup-node@v6
+    with:
+      node-version: lts/*
+      cache: pnpm
+
+  - uses: extractions/setup-just@v4
 
   - shell: bash
-    run: go mod download
+    run: just install true

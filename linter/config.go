@@ -71,7 +71,7 @@ func LoadConfig(path string) (Config, error) {
 		case "untrimmed-entry":
 			config.UntrimmedEntry = enabled
 		default:
-			return Config{}, fmt.Errorf("unknown rule %q", name)
+			return Config{}, fmt.Errorf("Unknown rule %q", name)
 		}
 	}
 	return config, nil
