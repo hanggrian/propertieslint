@@ -5,7 +5,7 @@ func duplicateBlankLineIssue(path string, line int) *Issue {
 		Path:    path,
 		Line:    line,
 		Column:  1,
-		Message: "duplicate blank line",
+		Message: "Duplicate blank line.",
 	}
 }
 
@@ -14,7 +14,7 @@ func noLeadingBlankLineIssue(path string) *Issue {
 		Path:    path,
 		Line:    1,
 		Column:  1,
-		Message: "leading blank line",
+		Message: "Unexpected leading blank line.",
 	}
 }
 
@@ -23,6 +23,22 @@ func trailingNewlineIssue(path string, lastLine int) *Issue {
 		Path:    path,
 		Line:    lastLine,
 		Column:  1,
-		Message: "missing trailing newline",
+		Message: "Missing trailing newline",
+	}
+}
+
+func unterminatedContinuationIssue(
+	path string,
+	line int,
+	continuing bool,
+) *Issue {
+	if !continuing {
+		return nil
+	}
+	return &Issue{
+		Path:    path,
+		Line:    line,
+		Column:  1,
+		Message: "Unterminated line continuation.",
 	}
 }

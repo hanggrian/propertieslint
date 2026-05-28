@@ -31,18 +31,24 @@ Example:
 
 ```json
 {
-  "duplicate-key": false
+  "duplicate-key": false,
+  "key-name": true,
+  "quoted-value": true
 }
 ```
 
 Supported keys:
 
+- `comment-style`: Comments should use `#`.
+- `comment-spaces`: Comments must have exactly one space before and after `#`.
 - `duplicate-blank-line`: Multiple consecutive blank lines.
 - `duplicate-key`: Entries with duplicate keys.
 - `invalid-escape`: Entries with invalid escape sequences.
+- `key-name`: Keys whose alphabetic characters are all uppercase.
 - `missing-separator`: Entries without `=` or `:` separators.
 - `missing-value`: Entries with a key but no value.
 - `no-leading-blank-line`: No blank line at the beginning of the file.
+- `quoted-value`: Values wrapped in double quotes.
 - `trailing-newline`: No newline at the end of the file.
 - `unterminated-line-continuation`: Entries with unterminated line
   continuations.

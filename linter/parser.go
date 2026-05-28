@@ -19,8 +19,7 @@ func splitKeyValue(line string) (key string, value string, separatorFound bool) 
 			continue
 		}
 		if current == '=' {
-			return strings.TrimRight(
-					line[:index], " \t\f"),
+			return strings.TrimRight(line[:index], " \t\f"),
 				strings.TrimLeft(line[index+1:], " \t\f"),
 				true
 		}
@@ -51,7 +50,6 @@ func endsWithContinuation(line string) bool {
 	if len(line) == 0 {
 		return false
 	}
-
 	backslashes := 0
 	for index := len(line) - 1; index >= 0; index-- {
 		if line[index] != '\\' {
@@ -59,7 +57,6 @@ func endsWithContinuation(line string) bool {
 		}
 		backslashes++
 	}
-
 	return backslashes == 1
 }
 
@@ -67,7 +64,6 @@ func unescape(value string) (string, error) {
 	if value == "" {
 		return value, nil
 	}
-
 	var builder strings.Builder
 	for index := 0; index < len(value); index++ {
 		current := value[index]
@@ -123,6 +119,5 @@ func unescape(value string) (string, error) {
 			builder.WriteByte(value[index])
 		}
 	}
-
 	return builder.String(), nil
 }
