@@ -28,15 +28,19 @@ func Targets(paths []string, config Config) (Result, error) {
 
 	result := Result{}
 	for _, target := range paths {
-		if err := walkTarget(target, func(path string) error {
-			issues, err := LintFile(path, config)
-			if err != nil {
-				return err
-			}
-			result.CheckedFiles++
-			result.Issues = append(result.Issues, issues...)
-			return nil
-		}); err != nil {
+		if err :=
+			walkTarget(
+				target,
+				func(path string) error {
+					issues, err := LintFile(path, config)
+					if err != nil {
+						return err
+					}
+					result.CheckedFiles++
+					result.Issues = append(result.Issues, issues...)
+					return nil
+				},
+			); err != nil {
 			return Result{}, err
 		}
 	}
@@ -114,14 +118,10 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 
 			// parse key and value
 			key, value, separatorFound := splitKeyValue(trimmed)
-			if key == "" {
-				issues =
-					append(issues, Issue{
-						Path:    path,
-						Line:    logicalStartLine,
-						Column:  1,
-						Message: "missing key",
-					})
+			if key == "" && separatorFound {
+				if config.MissingKey {
+					issues = append(issues, *missingKeyIssue(path, logicalStartLine))
+				}
 				return nil
 			}
 
@@ -152,16 +152,6 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 					return nil
 				}
 				normalizedKey = validatedKey
-			}
-			if config.QuotedValue {
-				if issue := quotedValueIssue(
-					path,
-					logicalStartLine,
-					len(rawKeyStart(rawLogical))+2+firstQuoteColumn(rawValueStart(rawLogical))-1,
-					value,
-				); issue != nil {
-					issues = append(issues, *issue)
-				}
 			}
 			if config.KeyName {
 				if issue := keyNameIssue(
@@ -211,44 +201,6 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 				}
 			}
 
-			// for inline comments, require one space around
-			if config.CommentSpaces {
-				line := rawLogical
-				idx := -1
-				for i := 0; i < len(line); i++ {
-					if line[i] == '#' {
-						// count preceding backslashes
-						bs := 0
-						j := i - 1
-						for j >= 0 &&
-							line[j] == '\\' {
-							bs++
-							j--
-						}
-						if bs%2 == 0 {
-							idx = i
-							break
-						}
-					}
-				}
-				if idx != -1 {
-					beforeOK :=
-						idx > 0 &&
-							line[idx-1] == ' ' &&
-							(idx-2 < 0 || line[idx-2] != ' ')
-					afterOK :=
-						idx+1 < len(line) &&
-							line[idx+1] == ' ' &&
-							(idx+2 >= len(line) || line[idx+2] != ' ')
-					if !(beforeOK && afterOK) {
-						issues =
-							append(
-								issues,
-								*commentSpacesInlineIssue(path, logicalStartLine, idx+1),
-							)
-					}
-				}
-			}
 			return nil
 		}
 
@@ -275,7 +227,7 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 				continue
 			}
 
-			// for full-line comments, require zero left padding and exactly one space
+			// comment checks
 			if trimmed[0] == '#' ||
 				trimmed[0] == '!' {
 				if trimmed[0] == '!' &&
@@ -283,7 +235,11 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 					issues =
 						append(
 							issues,
-							*commentStyleIssue(path, lineNumber, firstNonWhitespaceColumn(rawLine)),
+							*commentStyleIssue(
+								path,
+								lineNumber,
+								firstNonWhitespaceColumn(rawLine),
+							),
 						)
 				}
 				if trimmed[0] == '#' &&
@@ -297,7 +253,7 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 						issues =
 							append(
 								issues,
-								*commentSpacesFullLineIssue(
+								*commentSpacesIssue(
 									path,
 									lineNumber,
 									firstNonWhitespaceColumn(rawLine),
@@ -357,18 +313,21 @@ func walkTarget(target string, visit func(path string) error) error {
 	if !info.IsDir() {
 		return visit(target)
 	}
-	return filepath.WalkDir(target, func(path string, entry os.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		if entry.IsDir() {
-			return nil
-		}
-		if filepath.Ext(entry.Name()) != ".properties" {
-			return nil
-		}
-		return visit(path)
-	})
+	return filepath.WalkDir(
+		target,
+		func(path string, entry os.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if entry.IsDir() {
+				return nil
+			}
+			if filepath.Ext(entry.Name()) != ".properties" {
+				return nil
+			}
+			return visit(path)
+		},
+	)
 }
 
 func isPropertiesWhitespace(ch byte) bool {
@@ -421,13 +380,4 @@ func rawKeyStart(rawLogical string) string {
 func rawValueStart(rawLogical string) string {
 	_, value, _ := splitKeyValueRaw(rawLogical)
 	return value
-}
-
-func firstQuoteColumn(text string) int {
-	for index := 0; index < len(text); index++ {
-		if text[index] == '"' {
-			return index + 1
-		}
-	}
-	return 1
 }

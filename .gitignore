@@ -11,4 +11,8 @@
 node_modules/
 
 # GoLand
+.hugo_build.lock
 coverage.out
+website/public/
+website/resources/
+website/static/

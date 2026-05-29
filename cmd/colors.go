@@ -6,6 +6,10 @@ func Bold(text string) string {
 	return color.New(color.Bold).Sprint(text)
 }
 
+func Faint(text string) string {
+	return color.New(color.Faint).Sprint(text)
+}
+
 func Italic(text string) string {
 	return color.New(color.Italic).Sprint(text)
 }
@@ -28,4 +32,8 @@ func Blue(text string) string {
 
 func Cyan(text string) string {
 	return color.New(color.FgCyan).Sprint(text)
+}
+
+func Magenta(text string) string {
+	return color.New(color.FgMagenta).Sprint(text)
 }

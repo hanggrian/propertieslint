@@ -1,17 +1,17 @@
-[![GitHub Actions](https://shields.io/github/actions/workflow/status/hanggrian/propertieslint/code-analysis.yaml)](https://github.com/hanggrian/propertieslint/actions/workflows/code-analysis.yaml)
-[![Codecov](https://shields.io/codecov/c/gh/hanggrian/propertieslint)](https://app.codecov.io/gh/hanggrian/propertieslint/)
-[![Renovate](https://shields.io/badge/renovate-enabled-brightgreen)](https://developer.mend.io/github/hanggrian/propertieslint/)
-[![GitHub Release](https://shields.io/github/release/hanggrian/propertieslint)](https://pkg.go.dev/github.com/hanggrian/propertieslint/)
-[![Go](https://shields.io/github/go-mod/go-version/hanggrian/propertieslint)](https://go.dev/doc/go1.25)
+---
+layout: landing
+---
 
-# propertieslint
+<br/>
+
+# propertieslint {anchor=false}
 
 Small Go CLI for linting Java [Properties](https://docs.oracle.com/javase/tutorial/essential/environment/properties.html)
 files. It catches common issues like duplicate keys, missing value and
 unterminated line continuations. Rules are configured with local
 `.propertieslint.json` file or with `-c`/`--config` flag.
 
-[View rules](https://hanggrian.github.io/propertieslint/rules/comment/comment-spaces/)
+{{<button href="/rules/comment/comment-spaces/">}}Explore{{</button>}}
 
 ## Download
 

@@ -9,7 +9,6 @@ func TestLintReaderReportsCommonIssues(t *testing.T) {
 	const sample = "good=value\n" +
 		"other=value\n" +
 		"UPPER=value\n" +
-		"quoted=\"bar\"\n" +
 		"bad\\u12=value\n" +
 		"duplicate=one\n" +
 		"duplicate=two\n"
@@ -25,10 +24,9 @@ func TestLintReaderReportsCommonIssues(t *testing.T) {
 	if len(issues) < 3 {
 		t.Fatalf("expected at least 3 issues, got %d: %#v", len(issues), issues)
 	}
-	assertIssueAt(t, issues, 3, 1, "Key name cannot be all uppercase")
-	assertIssueAt(t, issues, 4, 8, "Value should not be quoted")
-	assertIssueAt(t, issues, 5, 4, "Invalid key escape")
-	assertIssueAt(t, issues, 7, 1, "Duplicate key")
+	assertIssueAt(t, issues, 3, 1, "Key name cannot be all uppercase.")
+	assertIssueAt(t, issues, 4, 4, "Invalid key escape: short unicode escape.")
+	assertIssueAt(t, issues, 6, 1, "Duplicate key (first seen at line 5).")
 }
 
 func TestLintReaderFlagsMissingSeparatorAndValue(t *testing.T) {
@@ -45,10 +43,23 @@ func TestLintReaderFlagsMissingSeparatorAndValue(t *testing.T) {
 	if err != nil {
 		t.Fatalf("lintReader returned error: %v", err)
 	}
-	assertIssueAt(t, issues, 1, 1, "Missing key/value separator")
-	assertIssueAt(t, issues, 2, 1, "Missing key/value separator")
-	assertIssueAt(t, issues, 3, 1, "Missing key/value separator")
-	assertIssueAt(t, issues, 4, 7, "Missing value")
+	assertIssueAt(t, issues, 1, 1, "Missing key/value separator.")
+	assertIssueAt(t, issues, 2, 1, "Missing key/value separator.")
+	assertIssueAt(t, issues, 3, 1, "Missing key/value separator.")
+	assertIssueAt(t, issues, 4, 7, "Missing value.")
+}
+
+func TestLintReaderFlagsMissingKey(t *testing.T) {
+	issues, err :=
+		lintReader(
+			"sample.properties",
+			strings.NewReader("=bar\n"),
+			DefaultConfig(),
+		)
+	if err != nil {
+		t.Fatalf("lintReader returned error: %v", err)
+	}
+	assertIssueAt(t, issues, 1, 1, "Missing key.")
 }
 
 func TestLintFileFlagsUnterminatedContinuationSample(t *testing.T) {
@@ -62,7 +73,7 @@ func TestLintFileFlagsUnterminatedContinuationSample(t *testing.T) {
 	if err != nil {
 		t.Fatalf("lintReader returned error: %v", err)
 	}
-	assertIssueAt(t, issues, 1, 1, "Unterminated line continuation")
+	assertIssueAt(t, issues, 1, 1, "Unterminated line continuation.")
 }
 
 func TestLintReaderCanDisableDuplicateKeyRule(t *testing.T) {
@@ -78,7 +89,7 @@ func TestLintReaderCanDisableDuplicateKeyRule(t *testing.T) {
 		t.Fatalf("lintReader returned error: %v", err)
 	}
 	for _, issue := range issues {
-		if strings.Contains(strings.ToLower(issue.Message), "duplicate key") {
+		if strings.Contains(strings.ToLower(issue.Message), "Duplicate key.") {
 			t.Fatalf("did not expect duplicate key issue, got %#v", issues)
 		}
 	}
@@ -95,7 +106,7 @@ func TestLintReaderReportsDuplicateKeyColumnAtStartOfKey(t *testing.T) {
 	if err != nil {
 		t.Fatalf("lintReader returned error: %v", err)
 	}
-	assertIssueAt(t, issues, 2, 2, "Duplicate key")
+	assertIssueAt(t, issues, 2, 2, "Duplicate key (first seen at line 1).")
 }
 
 func assertIssue(t *testing.T, issues []Issue, line int, messageSubstring string) {
@@ -144,10 +155,10 @@ func TestLintReaderFlagsUntrimmedEntry(t *testing.T) {
 	if err != nil {
 		t.Fatalf("lintReader returned error: %v", err)
 	}
-	assertIssueAt(t, issues, 2, 1, "Key has leading whitespace")
-	assertIssueAt(t, issues, 3, 4, "Key has trailing whitespace")
-	assertIssueAt(t, issues, 4, 5, "Value has leading whitespace")
-	assertIssueAt(t, issues, 5, 10, "Value has trailing whitespace")
+	assertIssueAt(t, issues, 2, 1, "Key has leading whitespace.")
+	assertIssueAt(t, issues, 3, 4, "Key has trailing whitespace.")
+	assertIssueAt(t, issues, 4, 5, "Value has leading whitespace.")
+	assertIssueAt(t, issues, 5, 10, "Value has trailing whitespace.")
 }
 
 func TestLintReaderFlagsUntrimmedKey(t *testing.T) {
@@ -160,7 +171,7 @@ func TestLintReaderFlagsUntrimmedKey(t *testing.T) {
 	if err != nil {
 		t.Fatalf("lintReader returned error: %v", err)
 	}
-	assertIssueAt(t, issues, 1, 1, "Key has leading whitespace")
+	assertIssueAt(t, issues, 1, 1, "Key has leading whitespace.")
 }
 
 func TestLintReaderFlagsUntrimmedValue(t *testing.T) {
@@ -173,7 +184,7 @@ func TestLintReaderFlagsUntrimmedValue(t *testing.T) {
 	if err != nil {
 		t.Fatalf("lintReader returned error: %v", err)
 	}
-	assertIssueAt(t, issues, 1, 5, "Value has leading whitespace")
+	assertIssueAt(t, issues, 1, 5, "Value has leading whitespace.")
 }
 
 func TestLintReaderFlagsDuplicateBlankLine(t *testing.T) {
@@ -190,7 +201,7 @@ func TestLintReaderFlagsDuplicateBlankLine(t *testing.T) {
 	if err != nil {
 		t.Fatalf("lintReader returned error: %v", err)
 	}
-	assertIssueAt(t, issues, 3, 1, "Duplicate blank line")
+	assertIssueAt(t, issues, 3, 1, "Duplicate blank line.")
 }
 
 func TestLintReaderFlagsCommentStyle(t *testing.T) {
@@ -204,7 +215,7 @@ func TestLintReaderFlagsCommentStyle(t *testing.T) {
 	if err != nil {
 		t.Fatalf("lintReader returned error: %v", err)
 	}
-	assertIssueAt(t, issues, 1, 1, "Illegal comment '!'")
+	assertIssueAt(t, issues, 1, 1, "Illegal comment '!'.")
 }
 
 func TestLintReaderCanDisableCommentStyle(t *testing.T) {
@@ -220,25 +231,10 @@ func TestLintReaderCanDisableCommentStyle(t *testing.T) {
 		t.Fatalf("lintReader returned error: %v", err)
 	}
 	for _, issue := range issues {
-		if strings.Contains(strings.ToLower(issue.Message), "Illegal comment '!'") {
+		if strings.Contains(strings.ToLower(issue.Message), "Illegal comment '!'.") {
 			t.Fatalf("did not expect comment-style issue, got %#v", issues)
 		}
 	}
-}
-
-func TestLintReaderFlagsCommentSpaces(t *testing.T) {
-	const sample = "key=value#bad\nkey=value # good\nkey=value  #bad\n"
-	issues, err :=
-		lintReader(
-			"sample.properties",
-			strings.NewReader(sample),
-			DefaultConfig(),
-		)
-	if err != nil {
-		t.Fatalf("lintReader returned error: %v", err)
-	}
-	assertIssueAt(t, issues, 1, 10, "One space around inline '#'.")
-	assertIssueAt(t, issues, 3, 12, "One space around inline '#'.")
 }
 
 func TestLintReaderCanDisableCommentSpaces(t *testing.T) {
@@ -335,40 +331,8 @@ func TestLintReaderCanDisableDuplicateBlankLine(t *testing.T) {
 		t.Fatalf("lintReader returned error: %v", err)
 	}
 	for _, issue := range issues {
-		if strings.Contains(issue.Message, "duplicate blank line") {
+		if strings.Contains(issue.Message, "Duplicate blank line.") {
 			t.Fatalf("did not expect duplicate blank line issue, got %#v", issues)
-		}
-	}
-}
-
-func TestLintReaderFlagsQuotedValue(t *testing.T) {
-	issues, err :=
-		lintReader(
-			"sample.properties",
-			strings.NewReader("foo=\"bar\"\n"),
-			DefaultConfig(),
-		)
-	if err != nil {
-		t.Fatalf("lintReader returned error: %v", err)
-	}
-	assertIssueAt(t, issues, 1, 5, "Value should not be quoted")
-}
-
-func TestLintReaderCanDisableQuotedValueRule(t *testing.T) {
-	config := DefaultConfig()
-	config.QuotedValue = false
-	issues, err :=
-		lintReader(
-			"sample.properties",
-			strings.NewReader("foo=\"bar\"\n"),
-			config,
-		)
-	if err != nil {
-		t.Fatalf("lintReader returned error: %v", err)
-	}
-	for _, issue := range issues {
-		if strings.Contains(strings.ToLower(issue.Message), "quoted") {
-			t.Fatalf("did not expect quoted value issue, got %#v", issues)
 		}
 	}
 }

@@ -20,21 +20,48 @@ func Execute() error {
 		if arg == "-h" ||
 			arg == "--help" {
 			fmt.Printf("Lint Java Properties files\n\n")
-			fmt.Printf("%s\n", Bold("Usage:"))
-			fmt.Printf("   propertieslint %s %s\n\n", Cyan("<paths>"), Blue("[options]"))
-			fmt.Printf("%s\n", Bold(Cyan("Paths:")))
-			fmt.Printf("   file      Supports %s file\n", Italic(".properties"))
-			fmt.Printf("   dir       Recursively find files in this directory\n")
+			fmt.Printf("%s\n", Bold(Cyan("Usage:")))
 			fmt.Printf(
-				"   pattern   For example, %s for all properties files in this\n",
+				"   %s %s %s\n\n",
+				Cyan("propertieslint"),
+				Magenta("[PATHS]"),
+				Blue("[OPTIONS]"),
+			)
+			fmt.Printf("%s\n", Bold(Magenta("Paths:")))
+			fmt.Printf(
+				"   %s      Supports %s file\n",
+				Magenta("file"),
+				Italic(".properties"),
+			)
+			fmt.Printf("   %s       Recursively find files in this directory\n", Magenta("dir"))
+			fmt.Printf(
+				"   %s   For example, %s for all properties files in this\n",
+				Magenta("pattern"),
 				Italic("*.properties"),
 			)
 			fmt.Printf("             directory, %s for all files\n\n", Italic("**/*"))
 			fmt.Printf("%s\n", Bold(Blue("Options:")))
-			fmt.Printf("   -c  [ --config ] arg   Configuration file\n")
-			fmt.Printf("   -q  [ --quiet ]        Disable informational messages\n")
-			fmt.Printf("   -h  [ --help ]         Display this message\n")
-			fmt.Printf("   -v  [ --version ]      Show app version\n")
+			fmt.Printf(
+				"   %s, %s %s   Configuration file\n",
+				Blue("-c"),
+				Blue("--config"),
+				Faint(Blue("<PATH>")),
+			)
+			fmt.Printf(
+				"   %s, %s           Disable informational messages\n",
+				Blue("-q"),
+				Blue("--quiet"),
+			)
+			fmt.Printf(
+				"   %s, %s            Display this message\n",
+				Blue("-h"),
+				Blue("--help"),
+			)
+			fmt.Printf(
+				"   %s, %s         Show app version\n",
+				Blue("-v"),
+				Blue("--version"),
+			)
 			return nil
 		}
 		if arg == "-q" ||

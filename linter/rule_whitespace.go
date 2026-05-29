@@ -26,19 +26,3 @@ func trailingNewlineIssue(path string, lastLine int) *Issue {
 		Message: "Missing trailing newline",
 	}
 }
-
-func unterminatedContinuationIssue(
-	path string,
-	line int,
-	continuing bool,
-) *Issue {
-	if !continuing {
-		return nil
-	}
-	return &Issue{
-		Path:    path,
-		Line:    line,
-		Column:  1,
-		Message: "Unterminated line continuation.",
-	}
-}

@@ -50,3 +50,34 @@ func keyNameIssue(
 		Message: "Key name cannot be all uppercase.",
 	}
 }
+
+func missingKeyIssue(
+	path string,
+	line int,
+) *Issue {
+	return &Issue{
+		Path:    path,
+		Line:    line,
+		Column:  1,
+		Message: "Missing key.",
+	}
+}
+
+func missingValueIssue(
+	path string,
+	line int,
+	column int,
+	separatorFound bool,
+	value string,
+) *Issue {
+	if !separatorFound ||
+		value != "" {
+		return nil
+	}
+	return &Issue{
+		Path:    path,
+		Line:    line,
+		Column:  column,
+		Message: "Missing value.",
+	}
+}
