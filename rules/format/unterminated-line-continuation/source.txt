@@ -1,0 +1,39 @@
+propertieslint
+
+- Comment Spaces: https://hanggrian.github.io/propertieslint/rules/comment/comment-spaces/
+- Comment Style: https://hanggrian.github.io/propertieslint/rules/comment/comment-style/
+- Invalid Escapes: https://hanggrian.github.io/propertieslint/rules/format/invalid-escapes/
+- Missing Separator: https://hanggrian.github.io/propertieslint/rules/format/missing-separator/
+- Unterminated Line Continuation: https://hanggrian.github.io/propertieslint/rules/format/unterminated-line-continuation/
+- Duplicate Key: https://hanggrian.github.io/propertieslint/rules/pair/duplicate-key/
+- Key Name: https://hanggrian.github.io/propertieslint/rules/pair/key-name/
+- Missing Key: https://hanggrian.github.io/propertieslint/rules/pair/missing-key/
+- Missing Value: https://hanggrian.github.io/propertieslint/rules/pair/missing-value/
+- Duplicate Blank Line: https://hanggrian.github.io/propertieslint/rules/whitespace/duplicate-blank-line/
+- No Leading Blank Line: https://hanggrian.github.io/propertieslint/rules/whitespace/no-leading-blank-line/
+- Trailing Newline: https://hanggrian.github.io/propertieslint/rules/whitespace/trailing-newline/
+- Untrimmed Entry: https://hanggrian.github.io/propertieslint/rules/whitespace/untrimmed-entry/
+
+
+# Unterminated line continuation
+
+Entries with unterminated line continuations. Line continuations must end with a
+backslash (`\`) followed by a newline.
+
+**Before &#10060;**
+
+```
+multiline=line1\
+
+escape=this is backslash \
+```
+
+**After &#9989;**
+
+```
+multiline=line1\
+line2
+
+escape=this is backslash \\
+```
+

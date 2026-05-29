@@ -1,0 +1,1 @@
+navigator.serviceWorker&&navigator.serviceWorker.register("/propertieslint/sw.js",{scope:"/propertieslint/"})

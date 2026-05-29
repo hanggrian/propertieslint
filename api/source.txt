@@ -1,0 +1,17 @@
+propertieslint
+
+- Comment Spaces: http://localhost:1313/propertieslint/rules/comment/comment-spaces/
+- Comment Style: http://localhost:1313/propertieslint/rules/comment/comment-style/
+- Invalid Escapes: http://localhost:1313/propertieslint/rules/format/invalid-escapes/
+- Missing Separator: http://localhost:1313/propertieslint/rules/format/missing-separator/
+- Unterminated Line Continuation: http://localhost:1313/propertieslint/rules/format/unterminated-line-continuation/
+- Duplicate Key: http://localhost:1313/propertieslint/rules/pair/duplicate-key/
+- Key Name: http://localhost:1313/propertieslint/rules/pair/key-name/
+- Missing Key: http://localhost:1313/propertieslint/rules/pair/missing-key/
+- Missing Value: http://localhost:1313/propertieslint/rules/pair/missing-value/
+- Duplicate Blank Line: http://localhost:1313/propertieslint/rules/whitespace/duplicate-blank-line/
+- No Leading Blank Line: http://localhost:1313/propertieslint/rules/whitespace/no-leading-blank-line/
+- Trailing Newline: http://localhost:1313/propertieslint/rules/whitespace/trailing-newline/
+- Untrimmed Entry: http://localhost:1313/propertieslint/rules/whitespace/untrimmed-entry/
+
+

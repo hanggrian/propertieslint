@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>propertieslint</title><link>https://hanggrian.github.io/propertieslint/</link><description>Recent content on propertieslint</description><generator>Hugo</generator><language>en</language><copyright>[© Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)</copyright><atom:link href="https://hanggrian.github.io/propertieslint/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://hanggrian.github.io/propertieslint/rules/comment/comment-spaces/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hanggrian.github.io/propertieslint/rules/comment/comment-spaces/</guid><description>&lt;h1 id="comment-spaces"&gt;Comment spaces&lt;a class="anchor" href="#comment-spaces"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;Comments must have no space before and exactly one space after &lt;code&gt;#&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Before ❌&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; #You are reading a comment&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;After ✅&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# You are reading a comment&lt;/code&gt;&lt;/pre&gt;</description></item><item><title/><link>https://hanggrian.github.io/propertieslint/rules/comment/comment-style/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hanggrian.github.io/propertieslint/rules/comment/comment-style/</guid><description>&lt;h1 id="comment-style"&gt;Comment style&lt;a class="anchor" href="#comment-style"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;Use &lt;code&gt;#&lt;/code&gt; for comments.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Before ❌&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;! You are reading a comment&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;After ✅&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# You are reading a comment&lt;/code&gt;&lt;/pre&gt;</description></item><item><title/><link>https://hanggrian.github.io/propertieslint/rules/format/invalid-escapes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hanggrian.github.io/propertieslint/rules/format/invalid-escapes/</guid><description>&lt;h1 id="invalid-escape"&gt;Invalid escape&lt;a class="anchor" href="#invalid-escape"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;Entries with invalid escape sequences. This includes short unicode escapes (e.g.
+&lt;code&gt;\u123&lt;/code&gt;), invalid octal escapes (e.g. &lt;code&gt;\8&lt;/code&gt;), and invalid single-character
+escapes (e.g. &lt;code&gt;\x&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Before ❌&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;unicode=\u123&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;After ✅&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;unicode=\u1234&lt;/code&gt;&lt;/pre&gt;</description></item><item><title/><link>https://hanggrian.github.io/propertieslint/rules/format/missing-separator/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hanggrian.github.io/propertieslint/rules/format/missing-separator/</guid><description>&lt;h1 id="missing-separator"&gt;Missing separator&lt;a class="anchor" href="#missing-separator"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;Entries must have either &lt;code&gt;=&lt;/code&gt; or &lt;code&gt;:&lt;/code&gt; separators.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Before ❌&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;key value&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;After ✅&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;key=value&lt;/code&gt;&lt;/pre&gt;</description></item><item><title/><link>https://hanggrian.github.io/propertieslint/rules/format/unterminated-line-continuation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hanggrian.github.io/propertieslint/rules/format/unterminated-line-continuation/</guid><description>&lt;h1 id="unterminated-line-continuation"&gt;Unterminated line continuation&lt;a class="anchor" href="#unterminated-line-continuation"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;Entries with unterminated line continuations. Line continuations must end with a
+backslash (&lt;code&gt;\&lt;/code&gt;) followed by a newline.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Before ❌&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;multiline=line1\
+
+escape=this is backslash \&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;After ✅&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;multiline=line1\
+line2
+
+escape=this is backslash \\&lt;/code&gt;&lt;/pre&gt;</description></item><item><title/><link>https://hanggrian.github.io/propertieslint/rules/pair/duplicate-key/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hanggrian.github.io/propertieslint/rules/pair/duplicate-key/</guid><description>&lt;h1 id="duplicate-key"&gt;Duplicate key&lt;a class="anchor" href="#duplicate-key"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;Duplicate keys are not allowed.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Before ❌&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;item=value
+item=other&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;After ✅&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;item1=value
+item2=other&lt;/code&gt;&lt;/pre&gt;</description></item><item><title/><link>https://hanggrian.github.io/propertieslint/rules/pair/key-name/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hanggrian.github.io/propertieslint/rules/pair/key-name/</guid><description>&lt;h1 id="key-name"&gt;Key name&lt;a class="anchor" href="#key-name"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;Keys can follow snake_case, camelCase or kebab-case, but not UPPERCASE.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Before ❌&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;ITEM=value
+
+DATABASE_USER=admin&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;After ✅&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;item=value
+
+database.user=admin&lt;/code&gt;&lt;/pre&gt;</description></item><item><title/><link>https://hanggrian.github.io/propertieslint/rules/pair/missing-key/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hanggrian.github.io/propertieslint/rules/pair/missing-key/</guid><description>&lt;h1 id="missing-key"&gt;Missing key&lt;a class="anchor" href="#missing-key"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;Entries must have a key.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Before ❌&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;=value&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;After ✅&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;item=value&lt;/code&gt;&lt;/pre&gt;</description></item><item><title/><link>https://hanggrian.github.io/propertieslint/rules/pair/missing-value/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hanggrian.github.io/propertieslint/rules/pair/missing-value/</guid><description>&lt;h1 id="missing-value"&gt;Missing value&lt;a class="anchor" href="#missing-value"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;Entries must have a value.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Before ❌&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;item=&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;After ✅&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;item=value&lt;/code&gt;&lt;/pre&gt;</description></item><item><title/><link>https://hanggrian.github.io/propertieslint/rules/whitespace/duplicate-blank-line/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hanggrian.github.io/propertieslint/rules/whitespace/duplicate-blank-line/</guid><description>&lt;h1 id="duplicate-blank-line"&gt;Duplicate blank line&lt;a class="anchor" href="#duplicate-blank-line"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;Multiple consecutive blank lines are not allowed.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Before ❌&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;item1=value
+
+
+item2=other&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;After ✅&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;item1=value
+
+item2=other&lt;/code&gt;&lt;/pre&gt;</description></item><item><title/><link>https://hanggrian.github.io/propertieslint/rules/whitespace/no-leading-blank-line/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hanggrian.github.io/propertieslint/rules/whitespace/no-leading-blank-line/</guid><description>&lt;h1 id="no-leading-blank-line"&gt;No leading blank line&lt;a class="anchor" href="#no-leading-blank-line"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;File cannot start with a blank line.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Before ❌&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;
+item=value&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;After ✅&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;item=value&lt;/code&gt;&lt;/pre&gt;</description></item><item><title/><link>https://hanggrian.github.io/propertieslint/rules/whitespace/trailing-newline/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hanggrian.github.io/propertieslint/rules/whitespace/trailing-newline/</guid><description>&lt;h1 id="trailing-newline"&gt;Trailing newline&lt;a class="anchor" href="#trailing-newline"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;File must end with a newline character.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Before ❌&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;item=value&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;After ✅&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;item=value
+↵&lt;/code&gt;&lt;/pre&gt;</description></item><item><title/><link>https://hanggrian.github.io/propertieslint/rules/whitespace/untrimmed-entry/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hanggrian.github.io/propertieslint/rules/whitespace/untrimmed-entry/</guid><description>&lt;h1 id="untrimmed-entry"&gt;Untrimmed entry&lt;a class="anchor" href="#untrimmed-entry"&gt;#&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;Entries cannot have leading or trailing whitespace in keys or values.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Before ❌&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; item = value&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;After ✅&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;item=value&lt;/code&gt;&lt;/pre&gt;</description></item><item><title>All rules</title><link>https://hanggrian.github.io/propertieslint/book/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hanggrian.github.io/propertieslint/book/</guid><description/></item></channel></rss>

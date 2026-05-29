@@ -1,0 +1,17 @@
+propertieslint
+
+- Comment Spaces: https://hanggrian.github.io/propertieslint/rules/comment/comment-spaces/
+- Comment Style: https://hanggrian.github.io/propertieslint/rules/comment/comment-style/
+- Invalid Escapes: https://hanggrian.github.io/propertieslint/rules/format/invalid-escapes/
+- Missing Separator: https://hanggrian.github.io/propertieslint/rules/format/missing-separator/
+- Unterminated Line Continuation: https://hanggrian.github.io/propertieslint/rules/format/unterminated-line-continuation/
+- Duplicate Key: https://hanggrian.github.io/propertieslint/rules/pair/duplicate-key/
+- Key Name: https://hanggrian.github.io/propertieslint/rules/pair/key-name/
+- Missing Key: https://hanggrian.github.io/propertieslint/rules/pair/missing-key/
+- Missing Value: https://hanggrian.github.io/propertieslint/rules/pair/missing-value/
+- Duplicate Blank Line: https://hanggrian.github.io/propertieslint/rules/whitespace/duplicate-blank-line/
+- No Leading Blank Line: https://hanggrian.github.io/propertieslint/rules/whitespace/no-leading-blank-line/
+- Trailing Newline: https://hanggrian.github.io/propertieslint/rules/whitespace/trailing-newline/
+- Untrimmed Entry: https://hanggrian.github.io/propertieslint/rules/whitespace/untrimmed-entry/
+
+

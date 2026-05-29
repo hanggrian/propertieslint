@@ -1,0 +1,60 @@
+propertieslint
+
+- Comment Spaces: https://hanggrian.github.io/propertieslint/rules/comment/comment-spaces/
+- Comment Style: https://hanggrian.github.io/propertieslint/rules/comment/comment-style/
+- Invalid Escapes: https://hanggrian.github.io/propertieslint/rules/format/invalid-escapes/
+- Missing Separator: https://hanggrian.github.io/propertieslint/rules/format/missing-separator/
+- Unterminated Line Continuation: https://hanggrian.github.io/propertieslint/rules/format/unterminated-line-continuation/
+- Duplicate Key: https://hanggrian.github.io/propertieslint/rules/pair/duplicate-key/
+- Key Name: https://hanggrian.github.io/propertieslint/rules/pair/key-name/
+- Missing Key: https://hanggrian.github.io/propertieslint/rules/pair/missing-key/
+- Missing Value: https://hanggrian.github.io/propertieslint/rules/pair/missing-value/
+- Duplicate Blank Line: https://hanggrian.github.io/propertieslint/rules/whitespace/duplicate-blank-line/
+- No Leading Blank Line: https://hanggrian.github.io/propertieslint/rules/whitespace/no-leading-blank-line/
+- Trailing Newline: https://hanggrian.github.io/propertieslint/rules/whitespace/trailing-newline/
+- Untrimmed Entry: https://hanggrian.github.io/propertieslint/rules/whitespace/untrimmed-entry/
+
+
+<br/>
+
+# propertieslint {anchor=false}
+
+Small Go CLI for linting Java [Properties](https://docs.oracle.com/javase/tutorial/essential/environment/properties.html)
+files. It catches common issues like duplicate keys, missing value and
+unterminated line continuations. Rules are configured with local
+`.propertieslint.json` file or with `-c`/`--config` flag.
+
+{{<button href="/rules/comment/comment-spaces/">}}Explore{{</button>}}
+
+## Download
+
+```sh
+go install github.com/hanggrian/propertieslint@latest
+```
+
+## Usage
+
+The CLI walks directories recursively and lints every `.properties` file it
+finds.
+
+```sh
+propertieslint some_file.properties ./some_dir
+```
+
+> [!NOTE]
+>
+> All rules are enabled by default.
+
+For example, to disable certain rules, refer to the rule ID within group name
+and set it to `false`. To disable all rules in a group, set the group name to
+`false`.
+
+```json
+{
+  "comment": {
+    "comment-spaces": false
+  },
+  "format": false
+}
+```
+

@@ -1,32 +1,23 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="doc2go">
-    <link href="_/css/main.css" rel="stylesheet" />
-    <link rel="apple-touch-icon" sizes="180x180" href="_/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="_/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="_/icons/favicon-16x16.png">
-    <link rel="shortcut icon" href="_/icons/favicon.ico"><title></title>
-</head>
-  <body>
-    <main><h3 id="pkg-directories">Directories</h3>
-
-<table>
-  <tbody>
-    <tr>
-        <td><a href="github.com/hanggrian/propertieslint/linter">github.com/hanggrian/propertieslint/linter</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-</table>
-</main>
-    <hr>
-    <footer>
-      <small id="generated-by-footer">
-        Generated with <a href="https://abhinav.github.io/doc2go/">doc2go</a>
-      </small>
-    </footer>
-    <script src="_/js/permalink.js"></script></body>
-</html>
+<!doctype html><html lang=en dir=ltr><head><meta name=generator content="Hugo 0.162.1"><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content=" propertieslint Small Go CLI for linting Java Properties files. It catches common issues like duplicate keys, missing value and unterminated line continuations. Rules are configured with local .propertieslint.json file or with -c/--config flag.
+Explore Download# go install github.com/hanggrian/propertieslint@latestUsage# The CLI walks directories recursively and lints every .properties file it finds.
+propertieslint some_file.properties ./some_dir All rules are enabled by default.
+For example, to disable certain rules, refer to the rule ID within group name and set it to false. To disable all rules in a group, set the group name to false.
+"><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#2e3440"><meta name=color-scheme content="light dark"><meta property="og:url" content="https://hanggrian.github.io/propertieslint/"><meta property="og:site_name" content="propertieslint"><meta property="og:title" content="propertieslint"><meta property="og:description" content="propertieslint Small Go CLI for linting Java Properties files. It catches common issues like duplicate keys, missing value and unterminated line continuations. Rules are configured with local .propertieslint.json file or with -c/--config flag.
+Explore Download# go install github.com/hanggrian/propertieslint@latestUsage# The CLI walks directories recursively and lints every .properties file it finds.
+propertieslint some_file.properties ./some_dir All rules are enabled by default.
+For example, to disable certain rules, refer to the rule ID within group name and set it to false. To disable all rules in a group, set the group name to false."><meta property="og:locale" content="en"><meta property="og:type" content="website"><meta itemprop=name content="propertieslint"><meta itemprop=description content="propertieslint Small Go CLI for linting Java Properties files. It catches common issues like duplicate keys, missing value and unterminated line continuations. Rules are configured with local .propertieslint.json file or with -c/--config flag.
+Explore Download# go install github.com/hanggrian/propertieslint@latestUsage# The CLI walks directories recursively and lints every .properties file it finds.
+propertieslint some_file.properties ./some_dir All rules are enabled by default.
+For example, to disable certain rules, refer to the rule ID within group name and set it to false. To disable all rules in a group, set the group name to false."><meta itemprop=wordCount content="100"><title>propertieslint</title><link rel=icon href=/propertieslint/favicon.png><link rel=manifest href=/propertieslint/manifest.json><link rel=canonical href=https://hanggrian.github.io/propertieslint/><link rel=stylesheet href=/propertieslint/book.min.98c83e4c8e1c8661368bcb29bbaf4dcc9d31b8164f76aae322d82d86a9750c65.css integrity="sha256-mMg+TI4chmE2i8spu69NzJ0xuBZPdqrjItgthql1DGU=" crossorigin=anonymous><script defer type=module src=/propertieslint/en.search.min.bdd1203f9e10005b6b2d6c8ff5eb48a149084cd6ba87553d074a3d79eabf0f2a.js integrity="sha256-vdEgP54QAFtrLWyP9etIoUkITNa6h1U9B0o9eeq/Dyo=" crossorigin=anonymous></script><script defer src=/propertieslint/sw.min.2b23272beab9efe6113233734ec55779af9be04643d8adead187570cb9348f7c.js integrity="sha256-KyMnK+q57+YRMjNzTsVXea+b4EZD2K3q0YdXDLk0j3w=" crossorigin=anonymous></script><link rel=alternate type=text/plain href=https://hanggrian.github.io/propertieslint/source.txt title><link rel=alternate type=application/rss+xml href=https://hanggrian.github.io/propertieslint/index.xml title></head><body dir=ltr class="book-kind-home book-type-page book-layout-landing"><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><div class=book-page><header class="book-header hidden"><nav><ul><li><a href=/propertieslint/rules/comment/comment-spaces/>Rules</a></li><li><a href=api/godoc/>GoDoc</a></li><li><a href=https://github.com/hanggrian/propertieslint/ target=_blank rel=noopener>Github</a></li></ul></nav></header><article class="markdown book-article"><br><h1 id=propertieslint>propertieslint</h1><p>Small Go CLI for linting Java <a href=https://docs.oracle.com/javase/tutorial/essential/environment/properties.html>Properties</a>
+files. It catches common issues like duplicate keys, missing value and
+unterminated line continuations. Rules are configured with local
+<code>.propertieslint.json</code> file or with <code>-c</code>/<code>--config</code> flag.</p><a class=book-btn href=/propertieslint/rules/comment/comment-spaces/>Explore</a><h2 id=download>Download<a class=anchor href=#download>#</a></h2><div class=highlight><pre tabindex=0 style=color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-sh data-lang=sh><span style=display:flex><span>go install github.com/hanggrian/propertieslint@latest</span></span></code></pre></div><h2 id=usage>Usage<a class=anchor href=#usage>#</a></h2><p>The CLI walks directories recursively and lints every <code>.properties</code> file it
+finds.</p><div class=highlight><pre tabindex=0 style=color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-sh data-lang=sh><span style=display:flex><span>propertieslint some_file.properties ./some_dir</span></span></code></pre></div><blockquote class='book-hint note'><p>All rules are enabled by default.</p></blockquote><p>For example, to disable certain rules, refer to the rule ID within group name
+and set it to <code>false</code>. To disable all rules in a group, set the group name to
+<code>false</code>.</p><div class=highlight><pre tabindex=0 style=color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-json data-lang=json><span style=display:flex><span>{
+</span></span><span style=display:flex><span>  <span style=color:#ff6ac1>&#34;comment&#34;</span>: {
+</span></span><span style=display:flex><span>    <span style=color:#ff6ac1>&#34;comment-spaces&#34;</span>: <span style=color:#ff6ac1>false</span>
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#ff6ac1>&#34;format&#34;</span>: <span style=color:#ff6ac1>false</span>
+</span></span><span style=display:flex><span>}</span></span></code></pre></div></article><footer class=book-footer><div class="book-copyright flex justify-center"><small>propertieslint - <a href=https://www.apache.org/licenses/LICENSE-2.0.txt>© Apache License 2.0</a></small></div><script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script></footer><label for=menu-control class="hidden book-menu-overlay"></label></div></main></body></html>

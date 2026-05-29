@@ -1,0 +1,258 @@
+propertieslint
+
+- Comment Spaces: https://hanggrian.github.io/propertieslint/rules/comment/comment-spaces/
+- Comment Style: https://hanggrian.github.io/propertieslint/rules/comment/comment-style/
+- Invalid Escapes: https://hanggrian.github.io/propertieslint/rules/format/invalid-escapes/
+- Missing Separator: https://hanggrian.github.io/propertieslint/rules/format/missing-separator/
+- Unterminated Line Continuation: https://hanggrian.github.io/propertieslint/rules/format/unterminated-line-continuation/
+- Duplicate Key: https://hanggrian.github.io/propertieslint/rules/pair/duplicate-key/
+- Key Name: https://hanggrian.github.io/propertieslint/rules/pair/key-name/
+- Missing Key: https://hanggrian.github.io/propertieslint/rules/pair/missing-key/
+- Missing Value: https://hanggrian.github.io/propertieslint/rules/pair/missing-value/
+- Duplicate Blank Line: https://hanggrian.github.io/propertieslint/rules/whitespace/duplicate-blank-line/
+- No Leading Blank Line: https://hanggrian.github.io/propertieslint/rules/whitespace/no-leading-blank-line/
+- Trailing Newline: https://hanggrian.github.io/propertieslint/rules/whitespace/trailing-newline/
+- Untrimmed Entry: https://hanggrian.github.io/propertieslint/rules/whitespace/untrimmed-entry/
+
+
+# Comment spaces
+
+Comments must have no space before and exactly one space after `#`.
+
+**Before &#10060;**
+
+```
+ #You are reading a comment
+```
+
+**After &#9989;**
+
+```
+# You are reading a comment
+```
+
+
+# Comment style
+
+Use `#` for comments.
+
+**Before &#10060;**
+
+```
+! You are reading a comment
+```
+
+**After &#9989;**
+
+```
+# You are reading a comment
+```
+
+
+# Invalid escape
+
+Entries with invalid escape sequences. This includes short unicode escapes (e.g.
+`\u123`), invalid octal escapes (e.g. `\8`), and invalid single-character
+escapes (e.g. `\x`).
+
+**Before &#10060;**
+
+```
+unicode=\u123
+```
+
+**After &#9989;**
+
+```
+unicode=\u1234
+```
+
+
+# Missing separator
+
+Entries must have either `=` or `:` separators.
+
+**Before &#10060;**
+
+```
+key value
+```
+
+**After &#9989;**
+
+```
+key=value
+```
+
+
+# Unterminated line continuation
+
+Entries with unterminated line continuations. Line continuations must end with a
+backslash (`\`) followed by a newline.
+
+**Before &#10060;**
+
+```
+multiline=line1\
+
+escape=this is backslash \
+```
+
+**After &#9989;**
+
+```
+multiline=line1\
+line2
+
+escape=this is backslash \\
+```
+
+
+# Duplicate key
+
+Duplicate keys are not allowed.
+
+**Before &#10060;**
+
+```
+item=value
+item=other
+```
+
+**After &#9989;**
+
+```
+item1=value
+item2=other
+```
+
+
+# Key name
+
+Keys can follow snake_case, camelCase or kebab-case, but not UPPERCASE.
+
+**Before &#10060;**
+
+```
+ITEM=value
+
+DATABASE_USER=admin
+```
+
+**After &#9989;**
+
+```
+item=value
+
+database.user=admin
+```
+
+
+# Missing key
+
+Entries must have a key.
+
+**Before &#10060;**
+
+```
+=value
+```
+
+**After &#9989;**
+
+```
+item=value
+```
+
+
+# Missing value
+
+Entries must have a value.
+
+**Before &#10060;**
+
+```
+item=
+```
+
+**After &#9989;**
+
+```
+item=value
+```
+
+
+# Duplicate blank line
+
+Multiple consecutive blank lines are not allowed.
+
+**Before &#10060;**
+
+```
+item1=value
+
+
+item2=other
+```
+
+**After &#9989;**
+
+```
+item1=value
+
+item2=other
+```
+
+
+# No leading blank line
+
+File cannot start with a blank line.
+
+**Before &#10060;**
+
+```
+
+item=value
+```
+
+**After &#9989;**
+
+```
+item=value
+```
+
+
+# Trailing newline
+
+File must end with a newline character.
+
+**Before &#10060;**
+
+```
+item=value
+```
+
+**After &#9989;**
+
+```
+item=value
+↵
+```
+
+
+# Untrimmed entry
+
+Entries cannot have leading or trailing whitespace in keys or values.
+
+**Before &#10060;**
+
+```
+ item = value
+```
+
+**After &#9989;**
+
+```
+item=value
+```
+
