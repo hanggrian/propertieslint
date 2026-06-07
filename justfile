@@ -1,39 +1,29 @@
 install CLEAN="false":
-    go mod {{ if CLEAN == "true" { "download" } else { "tidy" } }}
+    make install CLEAN={{ CLEAN }}
     uv sync {{ if CLEAN == "true" { "--locked" } else { "" } }}
     pnpm install {{ if CLEAN == "true" { "--frozen-lockfile" } else { "" } }}
 
-[group('check')]
-lint-go:
-    go run . .
+[private]
+lint1:
+    make lint
 
-[group('check')]
-lint-python:
+[private]
+lint2:
     uv run poe lint
 
-[group('check')]
-lint-node:
+[private]
+lint3:
     pnpm lint
 
-[group('check')]
 [parallel]
-lint: lint-go lint-python lint-node
-
-[group('check')]
-test:
-    go test ./linter/...
-
-[group('check')]
-cov:
-    go test -coverprofile=coverage.out ./linter/...
+lint: lint1 lint2 lint3
 
 format:
     just --fmt
-    go fmt ./...
+    make format
 
 doc:
-    rm -rf build/doc2go/
-    doc2go -out build/doc2go/ ./linter/...
+    make doc
 
 # remove generated docs after publishing
 generate-website: doc

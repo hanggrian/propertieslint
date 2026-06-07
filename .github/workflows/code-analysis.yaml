@@ -14,7 +14,7 @@ jobs:
 
     - uses: ./.github/actions/setup-workspace
 
-    - run: just lint
+    - run: make lint
 
   upload-coverage:
     runs-on: ubuntu-24.04
@@ -23,7 +23,7 @@ jobs:
 
     - uses: ./.github/actions/setup-workspace
 
-    - run: just cov
+    - run: make cov
 
     - if: github.ref == 'refs/heads/main'
       uses: codecov/codecov-action@v6

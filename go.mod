@@ -2,6 +2,8 @@ module github.com/hanggrian/propertieslint
 
 go 1.25.0
 
+toolchain go1.25.11
+
 require github.com/fatih/color v1.19.0
 
 require (
@@ -9,3 +11,5 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	golang.org/x/sys v0.42.0 // indirect
 )
+
+retract v1.0.0 // accidentally force-pushed
