@@ -7,7 +7,7 @@ settings:
 importers:
 
   .:
-    dependencies:
+    devDependencies:
       '@hanggrian/stylebook':
         specifier: 0.2.0
         version: 0.2.0(stylelint@17.12.0)

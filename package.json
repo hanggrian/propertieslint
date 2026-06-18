@@ -3,7 +3,7 @@
   "scripts": {
     "lint": "stylebook ."
   },
-  "dependencies": {
+  "devDependencies": {
     "@hanggrian/stylebook": "0.2.0"
   }
 }
