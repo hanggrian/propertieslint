@@ -7,14 +7,11 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+
+	"github.com/hanggrian/propertieslint/linter/rules"
 )
 
-type Issue struct {
-	Path    string
-	Line    int
-	Column  int
-	Message string
-}
+type Issue = rules.Issue
 
 type Result struct {
 	CheckedFiles int
@@ -68,7 +65,7 @@ func LintFile(path string, config Config) ([]Issue, error) {
 	}
 	defer file.Close()
 
-	issues, err := lintReader(path, file, config)
+	issues, err := LintReader(path, file, config)
 	if err != nil {
 		return nil, err
 	}
@@ -81,14 +78,15 @@ func LintFile(path string, config Config) ([]Issue, error) {
 		if len(data) > 0 &&
 			data[len(data)-1] != '\n' {
 			lineCount := strings.Count(string(data), "\n") + 1
-			issues = append(issues, *trailingNewlineIssue(path, lineCount))
+			issues = append(issues, *rules.TrailingNewlineIssue(path, lineCount))
 		}
 	}
 
 	return issues, nil
 }
 
-func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
+// LintReader reports rule violations in a properties stream.
+func LintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 	scanner := bufio.NewScanner(r)
 	scanner.Buffer(make([]byte, 1024), 1024*1024)
 	seenKeys := map[string]int{}
@@ -119,16 +117,16 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 			// parse key and value
 			key, value, separatorFound := splitKeyValue(trimmed)
 			if key == "" && separatorFound {
-				if config.MissingKey {
-					issues = append(issues, *missingKeyIssue(path, logicalStartLine))
+				if config.NoEmptyKey {
+					issues = append(issues, *rules.NoEmptyKeyIssue(path, logicalStartLine))
 				}
 				return nil
 			}
 
 			// checks for violation
-			if config.MissingSeparator {
+			if config.SeparatorStyle {
 				if issue :=
-					missingSeparatorIssue(
+					rules.SeparatorStyleIssue(
 						path,
 						logicalStartLine,
 						firstNonWhitespaceColumn(rawLogical),
@@ -138,9 +136,9 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 				}
 			}
 			normalizedKey := key
-			if config.InvalidEscape {
+			if config.ValidEscape {
 				validatedKey, escapeIssues, valid :=
-					validateEscapes(
+					rules.ValidateEscape(
 						path,
 						logicalStartLine,
 						rawLogical,
@@ -154,7 +152,7 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 				normalizedKey = validatedKey
 			}
 			if config.KeyName {
-				if issue := keyNameIssue(
+				if issue := rules.KeyNameIssue(
 					path,
 					logicalStartLine,
 					firstNonWhitespaceColumn(rawKeyStart(rawLogical)),
@@ -163,9 +161,9 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 					issues = append(issues, *issue)
 				}
 			}
-			if config.MissingValue {
+			if config.NoEmptyValue {
 				if issue :=
-					missingValueIssue(
+					rules.NoEmptyValueIssue(
 						path,
 						logicalStartLine,
 						len(rawKeyStart(rawLogical))+2,
@@ -175,9 +173,9 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 					issues = append(issues, *issue)
 				}
 			}
-			if config.DuplicateKey {
+			if config.NoDuplicateKey {
 				if issue :=
-					duplicateKeyIssue(
+					rules.NoDuplicateKeyIssue(
 						path,
 						logicalStartLine,
 						firstNonWhitespaceColumn(rawKeyStart(rawLogical)),
@@ -189,9 +187,9 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 			} else {
 				seenKeys[normalizedKey] = logicalStartLine
 			}
-			if config.UntrimmedEntry {
-				origKey, origValue, _ := splitKeyValueRaw(rawLogical)
-				for _, issue := range untrimmedEntryIssue(
+			if config.EntryTrimming {
+				origKey, origValue, _ := rules.SplitKeyValueRaw(rawLogical)
+				for _, issue := range rules.EntryTrimmingIssue(
 					path,
 					logicalStartLine,
 					origKey,
@@ -212,15 +210,13 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 			trimmed := strings.TrimLeft(rawLine, " \t\f")
 
 			if trimmed == "" {
-				if config.DuplicateBlankLine &&
-					isFirstLine {
-					if config.NoLeadingBlankLine {
-						issues = append(issues, *noLeadingBlankLineIssue(path))
-					}
+				if isFirstLine &&
+					config.NoLeadingBlankLine {
+					issues = append(issues, *rules.NoLeadingBlankLineIssue(path))
 				}
-				if config.DuplicateBlankLine &&
+				if config.NoDuplicateBlankLine &&
 					lastBlankLine == lineNumber-1 {
-					issues = append(issues, *duplicateBlankLineIssue(path, lineNumber))
+					issues = append(issues, *rules.NoDuplicateBlankLineIssue(path, lineNumber))
 				}
 				lastBlankLine = lineNumber
 				isFirstLine = false
@@ -235,7 +231,7 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 					issues =
 						append(
 							issues,
-							*commentStyleIssue(
+							*rules.CommentStyleIssue(
 								path,
 								lineNumber,
 								firstNonWhitespaceColumn(rawLine),
@@ -243,22 +239,14 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 						)
 				}
 				if trimmed[0] == '#' &&
-					config.CommentSpaces {
-					leading := firstNonWhitespaceColumn(rawLine) - 1
-					afterOK :=
-						len(trimmed) >= 2 &&
-							trimmed[1] == ' ' &&
-							(len(trimmed) == 2 || trimmed[2] != ' ')
-					if leading != 0 || !afterOK {
-						issues =
-							append(
-								issues,
-								*commentSpacesIssue(
-									path,
-									lineNumber,
-									firstNonWhitespaceColumn(rawLine),
-								),
-							)
+					config.CommentSpacing {
+					for _, issue := range rules.CommentSpacingIssue(
+						path,
+						lineNumber,
+						firstNonWhitespaceColumn(rawLine),
+						trimmed,
+					) {
+						issues = append(issues, *issue)
 					}
 				}
 				isFirstLine = false
@@ -270,7 +258,7 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 			rawLine = strings.TrimLeft(rawLine, " \t\f")
 		}
 
-		// check for unterminated continuation from previous line
+		// check whether this line continues onto the next
 		if endsWithContinuation(rawLine) {
 			logical.WriteString(rawLine[:len(rawLine)-1])
 			logicalRaw.WriteString(rawLine[:len(rawLine)-1])
@@ -288,13 +276,13 @@ func lintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 		logicalRaw.Reset()
 	}
 
-	// check for unterminated continuation at end of file
+	// check for dangling continuation at end of file
 	if err := scanner.Err(); err != nil {
 		return nil, err
 	}
-	if config.UnterminatedContinuation {
+	if config.NoDanglingContinuation {
 		if issue :=
-			unterminatedContinuationIssue(
+			rules.NoDanglingContinuationIssue(
 				path,
 				logicalStartLine,
 				continuing,
@@ -330,42 +318,9 @@ func walkTarget(target string, visit func(path string) error) error {
 	)
 }
 
-func isPropertiesWhitespace(ch byte) bool {
-	return ch == ' ' ||
-		ch == '\t' ||
-		ch == '\f'
-}
-
-func firstWhitespaceColumn(text string) int {
-	for index := 0; index < len(text); index++ {
-		if isPropertiesWhitespace(text[index]) {
-			return index + 1
-		}
-	}
-	return 1
-}
-
-func firstBackslashColumn(text string) int {
-	for index := 0; index < len(text); index++ {
-		if text[index] == '\\' {
-			return index + 1
-		}
-	}
-	return 1
-}
-
 func firstNonWhitespaceColumn(text string) int {
 	for index := 0; index < len(text); index++ {
-		if !isPropertiesWhitespace(text[index]) {
-			return index + 1
-		}
-	}
-	return 1
-}
-
-func lastNonWhitespaceColumn(text string) int {
-	for index := len(text) - 1; index >= 0; index-- {
-		if !isPropertiesWhitespace(text[index]) {
+		if !rules.IsPropertiesWhitespace(text[index]) {
 			return index + 1
 		}
 	}
@@ -373,11 +328,6 @@ func lastNonWhitespaceColumn(text string) int {
 }
 
 func rawKeyStart(rawLogical string) string {
-	key, _, _ := splitKeyValueRaw(rawLogical)
+	key, _, _ := rules.SplitKeyValueRaw(rawLogical)
 	return key
-}
-
-func rawValueStart(rawLogical string) string {
-	_, value, _ := splitKeyValueRaw(rawLogical)
-	return value
 }

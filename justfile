@@ -25,9 +25,9 @@ format:
 doc:
     make doc
 
-# remove generated docs after publishing
+# generate the website with embedded Go API docs
 generate-website: doc
     rm -rf website/static/api/
     mkdir -p website/static/api/
     mv build/doc2go/ website/static/api/godoc/
-    cd website/ && hugo --minify
+    pnpm exec hugo --source website --minify

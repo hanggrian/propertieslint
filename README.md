@@ -8,10 +8,10 @@
 
 Small Go CLI for linting Java [Properties](https://docs.oracle.com/javase/tutorial/essential/environment/properties.html)
 files. It catches common issues like duplicate keys, missing value and
-unterminated line continuations. Rules are configured with local
+dangling line continuations. Rules are configured with local
 `.propertieslint.json` file or with `-c`/`--config` flag.
 
-[View rules](https://hanggrian.github.io/propertieslint/rules/comment/comment-spaces/)
+[View rules](https://hanggrian.github.io/propertieslint/rules/comment/comment-spacing/)
 
 ## Download
 
@@ -39,7 +39,7 @@ and set it to `false`. To disable all rules in a group, set the group name to
 ```json
 {
   "comment": {
-    "comment-spaces": false
+    "comment-spacing": false
   },
   "format": false
 }

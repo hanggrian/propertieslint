@@ -41,7 +41,7 @@ weight = 1
 [menu]
 [[menu.home]]
 name = "Rules"
-pageRef = "/rules/comment/comment-spaces/"
+pageRef = "/rules/comment/comment-spacing/"
 weight = 2
 
 [[menu.home]]

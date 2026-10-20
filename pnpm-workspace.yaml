@@ -1,0 +1,4 @@
+allowBuilds:
+  hugo-extended: true
+minimumReleaseAgeExclude:
+- "@hanggrian/stylebook@0.3.1"

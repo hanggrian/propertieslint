@@ -10,36 +10,36 @@ import (
 const DefaultConfigFile = "propertieslint.json"
 
 type Config struct {
-	CommentStyle             bool
-	CommentSpaces            bool
-	DuplicateBlankLine       bool
-	DuplicateKey             bool
-	InvalidEscape            bool
-	KeyName                  bool
-	MissingKey               bool
-	MissingSeparator         bool
-	MissingValue             bool
-	NoLeadingBlankLine       bool
-	TrailingNewline          bool
-	UnterminatedContinuation bool
-	UntrimmedEntry           bool
+	CommentStyle           bool
+	CommentSpacing         bool
+	EntryTrimming          bool
+	KeyName                bool
+	NoDanglingContinuation bool
+	NoDuplicateBlankLine   bool
+	NoDuplicateKey         bool
+	NoEmptyKey             bool
+	NoEmptyValue           bool
+	NoLeadingBlankLine     bool
+	SeparatorStyle         bool
+	TrailingNewline        bool
+	ValidEscape            bool
 }
 
 func DefaultConfig() Config {
 	return Config{
-		CommentStyle:             true,
-		CommentSpaces:            true,
-		DuplicateBlankLine:       true,
-		DuplicateKey:             true,
-		InvalidEscape:            true,
-		KeyName:                  true,
-		MissingKey:               true,
-		MissingSeparator:         true,
-		MissingValue:             true,
-		NoLeadingBlankLine:       true,
-		TrailingNewline:          true,
-		UnterminatedContinuation: true,
-		UntrimmedEntry:           true,
+		CommentStyle:           true,
+		CommentSpacing:         true,
+		EntryTrimming:          true,
+		KeyName:                true,
+		NoDanglingContinuation: true,
+		NoDuplicateBlankLine:   true,
+		NoDuplicateKey:         true,
+		NoEmptyKey:             true,
+		NoEmptyValue:           true,
+		NoLeadingBlankLine:     true,
+		SeparatorStyle:         true,
+		TrailingNewline:        true,
+		ValidEscape:            true,
 	}
 }
 
@@ -93,48 +93,48 @@ func applyGroupRule(config *Config, groupName string, ruleName string, enabled b
 		switch ruleName {
 		case "comment-style":
 			config.CommentStyle = enabled
-		case "comment-spaces":
-			config.CommentSpaces = enabled
+		case "comment-spacing":
+			config.CommentSpacing = enabled
 		default:
 			return fmt.Errorf("unknown rule %q in group %q", ruleName, groupName)
 		}
 
 	case "format":
 		switch ruleName {
-		case "invalid-escape":
-			config.InvalidEscape = enabled
-		case "missing-key-value-separator":
-			config.MissingSeparator = enabled
-		case "unterminated-line-continuation":
-			config.UnterminatedContinuation = enabled
+		case "no-dangling-continuation":
+			config.NoDanglingContinuation = enabled
+		case "separator-style":
+			config.SeparatorStyle = enabled
+		case "valid-escape":
+			config.ValidEscape = enabled
 		default:
 			return fmt.Errorf("unknown rule %q in group %q", ruleName, groupName)
 		}
 
 	case "pair":
 		switch ruleName {
-		case "duplicate-key":
-			config.DuplicateKey = enabled
 		case "key-name":
 			config.KeyName = enabled
-		case "missing-key":
-			config.MissingKey = enabled
-		case "missing-value":
-			config.MissingValue = enabled
+		case "no-duplicate-key":
+			config.NoDuplicateKey = enabled
+		case "no-empty-key":
+			config.NoEmptyKey = enabled
+		case "no-empty-value":
+			config.NoEmptyValue = enabled
 		default:
 			return fmt.Errorf("unknown rule %q in group %q", ruleName, groupName)
 		}
 
 	case "whitespace":
 		switch ruleName {
-		case "duplicate-blank-line":
-			config.DuplicateBlankLine = enabled
+		case "entry-trimming":
+			config.EntryTrimming = enabled
+		case "no-duplicate-blank-line":
+			config.NoDuplicateBlankLine = enabled
 		case "no-leading-blank-line":
 			config.NoLeadingBlankLine = enabled
 		case "trailing-newline":
 			config.TrailingNewline = enabled
-		case "untrimmed-entry":
-			config.UntrimmedEntry = enabled
 		default:
 			return fmt.Errorf("unknown rule %q in group %q", ruleName, groupName)
 		}
@@ -149,24 +149,24 @@ func disableGroup(config *Config, groupName string) {
 	switch groupName {
 	case "comment":
 		config.CommentStyle = false
-		config.CommentSpaces = false
+		config.CommentSpacing = false
 
 	case "format":
-		config.InvalidEscape = false
-		config.MissingSeparator = false
-		config.UnterminatedContinuation = false
+		config.NoDanglingContinuation = false
+		config.SeparatorStyle = false
+		config.ValidEscape = false
 
 	case "pair":
-		config.DuplicateKey = false
 		config.KeyName = false
-		config.MissingKey = false
-		config.MissingValue = false
+		config.NoDuplicateKey = false
+		config.NoEmptyKey = false
+		config.NoEmptyValue = false
 
 	case "whitespace":
-		config.DuplicateBlankLine = false
+		config.EntryTrimming = false
+		config.NoDuplicateBlankLine = false
 		config.NoLeadingBlankLine = false
 		config.TrailingNewline = false
-		config.UntrimmedEntry = false
 	}
 }
 

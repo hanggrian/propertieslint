@@ -2,7 +2,7 @@
 weight: 30
 ---
 
-# Duplicate key
+# No duplicate key
 
 Duplicate keys are not allowed.
 

@@ -2,14 +2,14 @@
 weight: 30
 ---
 
-# Missing value
+# No empty key
 
-Entries must have a value.
+Keys cannot be empty.
 
 **Before &#10060;**
 
 ```
-item=
+=value
 ```
 
 **After &#9989;**

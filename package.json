@@ -4,6 +4,7 @@
     "lint": "stylebook ."
   },
   "devDependencies": {
-    "@hanggrian/stylebook": "0.2.0"
+    "@hanggrian/stylebook": "0.3.1",
+    "hugo-extended": "0.168.0"
   }
 }

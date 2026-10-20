@@ -2,14 +2,14 @@
 weight: 20
 ---
 
-# Missing separator
+# Separator style
 
-Entries must have either `=` or `:` separators.
+Entries must use `=` as the key/value separator.
 
 **Before &#10060;**
 
 ```
-key value
+key:value
 ```
 
 **After &#9989;**

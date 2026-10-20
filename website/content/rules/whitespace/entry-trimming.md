@@ -2,9 +2,9 @@
 weight: 40
 ---
 
-# Untrimmed entry
+# Entry trimming
 
-Entries cannot have leading or trailing whitespace in keys or values.
+Keys and values cannot have leading or trailing whitespace.
 
 **Before &#10060;**
 

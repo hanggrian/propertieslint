@@ -2,9 +2,9 @@
 weight: 40
 ---
 
-# Duplicate blank line
+# No duplicate blank line
 
-Multiple consecutive blank lines are not allowed.
+Consecutive blank lines are not allowed.
 
 **Before &#10060;**
 
