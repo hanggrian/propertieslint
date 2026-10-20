@@ -17,7 +17,7 @@ func TestNoDanglingContinuationAllowsEscapedBackslash(t *testing.T) {
 }
 
 func TestNoDanglingContinuationAllowsContinuedEntry(t *testing.T) {
-	issues := lintSample(t, "foo=bar\\\nbaz=qux\n")
+	issues := lintSample(t, "foo=bar\\\nfoo2=qux\n")
 
 	if len(issues) != 0 {
 		t.Fatalf("expected no issues, got %#v", issues)
@@ -31,7 +31,7 @@ func TestNoDanglingContinuationReportsEntryStartLine(t *testing.T) {
 }
 
 func TestNoDanglingContinuationAllowsBlankContinuationTarget(t *testing.T) {
-	issues := lintSample(t, "foo=bar\\\n\nbaz=qux\n")
+	issues := lintSample(t, "baz=qux\nfoo=bar\\\n\n")
 
 	if len(issues) != 0 {
 		t.Fatalf("expected no issues, got %#v", issues)

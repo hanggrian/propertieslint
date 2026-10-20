@@ -2,6 +2,7 @@ package rules
 
 import (
 	"fmt"
+	"strings"
 	"unicode"
 )
 
@@ -29,6 +30,25 @@ func KeyNameIssue(
 		Line:    line,
 		Column:  column,
 		Message: "Key name cannot be all uppercase.",
+	}
+}
+
+func KeyOrderIssue(
+	path string,
+	line int,
+	column int,
+	previousKey string,
+	key string,
+) *Issue {
+	if previousKey == "" ||
+		strings.Compare(strings.ToLower(previousKey), strings.ToLower(key)) <= 0 {
+		return nil
+	}
+	return &Issue{
+		Path:    path,
+		Line:    line,
+		Column:  column,
+		Message: fmt.Sprintf("Arrange '%s' before '%s'", key, previousKey),
 	}
 }
 

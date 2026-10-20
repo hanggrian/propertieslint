@@ -11,7 +11,27 @@ func TestCommentSpacingAllowsProperComment(t *testing.T) {
 }
 
 func TestCommentSpacingAllowsEmptyCommentWithSpace(t *testing.T) {
-	issues := lintSample(t, "# \n")
+	issues := lintSample(t, "# one\n# \n# two\n")
+
+	if len(issues) != 0 {
+		t.Fatalf("expected no issues, got %#v", issues)
+	}
+}
+
+func TestCommentSpacingAllowsBareHash(t *testing.T) {
+	issues := lintSample(t, "# one\n#\n# two\n")
+
+	if len(issues) != 0 {
+		t.Fatalf("expected no issues, got %#v", issues)
+	}
+}
+
+func TestCommentSpacingAllowsBareHashAtEndOfLine(t *testing.T) {
+	config := DefaultConfig()
+	config.CommentTrimming = false
+	config.NoEmptyComment = false
+
+	issues := lintSampleWithConfig(t, "#\n", config)
 
 	if len(issues) != 0 {
 		t.Fatalf("expected no issues, got %#v", issues)

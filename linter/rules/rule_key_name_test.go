@@ -29,7 +29,7 @@ func TestKeyNameAllowsLowercaseNames(t *testing.T) {
 }
 
 func TestKeyNameAllowsMixedAndSymbolHeavyNames(t *testing.T) {
-	issues := lintSample(t, "api-V2=value\n123_456=value\n")
+	issues := lintSample(t, "123_456=value\napi-V2=value\n")
 
 	if len(issues) != 0 {
 		t.Fatalf("expected no issues, got %#v", issues)

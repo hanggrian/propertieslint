@@ -22,4 +22,4 @@ format:
 
 doc:
 	rm -rf build/doc2go/
-	go tool doc2go -out build/doc2go/ ./linter/ ./linter/rules/
+	go tool doc2go -out build/doc2go/ ./linter/...

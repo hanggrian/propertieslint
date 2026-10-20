@@ -12,11 +12,14 @@ const DefaultConfigFile = "propertieslint.json"
 type Config struct {
 	CommentStyle           bool
 	CommentSpacing         bool
+	CommentTrimming        bool
 	EntryTrimming          bool
 	KeyName                bool
+	KeyOrder               bool
 	NoDanglingContinuation bool
 	NoDuplicateBlankLine   bool
 	NoDuplicateKey         bool
+	NoEmptyComment         bool
 	NoEmptyKey             bool
 	NoEmptyValue           bool
 	NoLeadingBlankLine     bool
@@ -29,11 +32,14 @@ func DefaultConfig() Config {
 	return Config{
 		CommentStyle:           true,
 		CommentSpacing:         true,
+		CommentTrimming:        true,
 		EntryTrimming:          true,
 		KeyName:                true,
+		KeyOrder:               true,
 		NoDanglingContinuation: true,
 		NoDuplicateBlankLine:   true,
 		NoDuplicateKey:         true,
+		NoEmptyComment:         true,
 		NoEmptyKey:             true,
 		NoEmptyValue:           true,
 		NoLeadingBlankLine:     true,
@@ -95,6 +101,10 @@ func applyGroupRule(config *Config, groupName string, ruleName string, enabled b
 			config.CommentStyle = enabled
 		case "comment-spacing":
 			config.CommentSpacing = enabled
+		case "comment-trimming":
+			config.CommentTrimming = enabled
+		case "no-empty-comment":
+			config.NoEmptyComment = enabled
 		default:
 			return fmt.Errorf("unknown rule %q in group %q", ruleName, groupName)
 		}
@@ -115,6 +125,8 @@ func applyGroupRule(config *Config, groupName string, ruleName string, enabled b
 		switch ruleName {
 		case "key-name":
 			config.KeyName = enabled
+		case "key-order":
+			config.KeyOrder = enabled
 		case "no-duplicate-key":
 			config.NoDuplicateKey = enabled
 		case "no-empty-key":
@@ -150,6 +162,8 @@ func disableGroup(config *Config, groupName string) {
 	case "comment":
 		config.CommentStyle = false
 		config.CommentSpacing = false
+		config.CommentTrimming = false
+		config.NoEmptyComment = false
 
 	case "format":
 		config.NoDanglingContinuation = false
@@ -158,6 +172,7 @@ func disableGroup(config *Config, groupName string) {
 
 	case "pair":
 		config.KeyName = false
+		config.KeyOrder = false
 		config.NoDuplicateKey = false
 		config.NoEmptyKey = false
 		config.NoEmptyValue = false

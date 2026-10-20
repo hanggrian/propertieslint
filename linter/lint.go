@@ -87,9 +87,14 @@ func LintFile(path string, config Config) ([]Issue, error) {
 
 // LintReader reports rule violations in a properties stream.
 func LintReader(path string, r io.Reader, config Config) ([]Issue, error) {
+	type commentPosition struct {
+		line   int
+		column int
+	}
 	scanner := bufio.NewScanner(r)
 	scanner.Buffer(make([]byte, 1024), 1024*1024)
 	seenKeys := map[string]int{}
+	previousKey := ""
 	issues := make([]Issue, 0)
 	logical := strings.Builder{}
 	logicalRaw := strings.Builder{}
@@ -98,6 +103,36 @@ func LintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 	lineNumber := 0
 	lastBlankLine := -2
 	isFirstLine := true
+	pendingEmptyComments := make([]commentPosition, 0)
+	commentBlockHasContent := false
+	flushTrimmedComments := func(leading bool) {
+		if config.CommentTrimming {
+			for _, comment := range pendingEmptyComments {
+				issues = append(issues, *rules.CommentTrimmingIssue(
+					path,
+					comment.line,
+					comment.column,
+					leading,
+				))
+			}
+		}
+		pendingEmptyComments = pendingEmptyComments[:0]
+	}
+	endCommentBlock := func() {
+		if commentBlockHasContent {
+			flushTrimmedComments(false)
+		} else if config.NoEmptyComment {
+			for _, comment := range pendingEmptyComments {
+				issues = append(issues, *rules.NoEmptyCommentIssue(
+					path,
+					comment.line,
+					comment.column,
+				))
+			}
+		}
+		pendingEmptyComments = pendingEmptyComments[:0]
+		commentBlockHasContent = false
+	}
 	flush :=
 		func(rawLogical string) error {
 			// ensure flush only attempts key/value parsing for actual entries
@@ -151,6 +186,18 @@ func LintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 				}
 				normalizedKey = validatedKey
 			}
+			if config.KeyOrder {
+				if issue := rules.KeyOrderIssue(
+					path,
+					logicalStartLine,
+					firstNonWhitespaceColumn(rawKeyStart(rawLogical)),
+					previousKey,
+					normalizedKey,
+				); issue != nil {
+					issues = append(issues, *issue)
+				}
+			}
+			previousKey = normalizedKey
 			if config.KeyName {
 				if issue := rules.KeyNameIssue(
 					path,
@@ -220,12 +267,30 @@ func LintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 				}
 				lastBlankLine = lineNumber
 				isFirstLine = false
+				endCommentBlock()
 				continue
 			}
 
 			// comment checks
 			if trimmed[0] == '#' ||
 				trimmed[0] == '!' {
+				hasContent := strings.TrimSpace(trimmed[1:]) != ""
+				if hasContent {
+					if !commentBlockHasContent {
+						flushTrimmedComments(true)
+					} else {
+						pendingEmptyComments = pendingEmptyComments[:0]
+					}
+					commentBlockHasContent = true
+				} else {
+					pendingEmptyComments = append(
+						pendingEmptyComments,
+						commentPosition{
+							line:   lineNumber,
+							column: firstNonWhitespaceColumn(rawLine),
+						},
+					)
+				}
 				if trimmed[0] == '!' &&
 					config.CommentStyle {
 					issues =
@@ -253,6 +318,7 @@ func LintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 				continue
 			}
 			isFirstLine = false
+			endCommentBlock()
 			logicalStartLine = lineNumber
 		} else {
 			rawLine = strings.TrimLeft(rawLine, " \t\f")
@@ -290,6 +356,7 @@ func LintReader(path string, r io.Reader, config Config) ([]Issue, error) {
 			issues = append(issues, *issue)
 		}
 	}
+	endCommentBlock()
 	return issues, nil
 }
 

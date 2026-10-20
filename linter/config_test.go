@@ -16,12 +16,16 @@ func TestLoadConfigParsesGroupedRules(t *testing.T) {
 			[]byte(
 				`{
 					"comment": {
-						"comment-spacing": false
+						"comment-spacing": false,
+						"comment-trimming": false,
+						"no-empty-comment": false
 					},
 					"format": false,
 					"pair": {
+						"key-order": false,
 						"no-duplicate-key": false,
-						"no-empty-key": false
+						"no-empty-key": false,
+						"no-empty-value": true
 					},
 					"whitespace": {
 						"trailing-newline": false,
@@ -45,6 +49,12 @@ func TestLoadConfigParsesGroupedRules(t *testing.T) {
 	if config.CommentSpacing {
 		t.Fatalf("expected comment-spacing to be disabled")
 	}
+	if config.CommentTrimming {
+		t.Fatalf("expected comment-trimming to be disabled")
+	}
+	if config.NoEmptyComment {
+		t.Fatalf("expected no-empty-comment to be disabled")
+	}
 	if config.ValidEscape ||
 		config.NoDanglingContinuation ||
 		config.SeparatorStyle {
@@ -52,6 +62,9 @@ func TestLoadConfigParsesGroupedRules(t *testing.T) {
 	}
 	if config.NoDuplicateKey {
 		t.Fatalf("expected no-duplicate-key to be disabled")
+	}
+	if config.KeyOrder {
+		t.Fatalf("expected key-order to be disabled")
 	}
 	if !config.KeyName {
 		t.Fatalf("expected key-name to remain enabled")

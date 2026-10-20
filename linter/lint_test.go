@@ -12,11 +12,13 @@ func TestLintReaderReportsCommonIssues(t *testing.T) {
 		"bad\\u12=value\n" +
 		"duplicate=one\n" +
 		"duplicate=two\n"
+	config := DefaultConfig()
+	config.KeyOrder = false
 	issues, err :=
 		LintReader(
 			"sample.properties",
 			strings.NewReader(sample),
-			DefaultConfig(),
+			config,
 		)
 	if err != nil {
 		t.Fatalf("LintReader returned error: %v", err)
