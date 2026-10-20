@@ -1,22 +1,22 @@
 const cacheName = self.location.pathname
 const pages = [
 
-  "/propertieslint/rules/comment/comment-spaces/",
+  "/propertieslint/rules/comment/comment-spacing/",
     "/propertieslint/rules/comment/comment-style/",
     "/propertieslint/rules/comment/",
-    "/propertieslint/rules/format/invalid-escapes/",
-    "/propertieslint/rules/format/missing-separator/",
-    "/propertieslint/rules/format/unterminated-line-continuation/",
+    "/propertieslint/rules/format/no-dangling-continuation/",
+    "/propertieslint/rules/format/separator-style/",
+    "/propertieslint/rules/format/valid-escape/",
     "/propertieslint/rules/format/",
-    "/propertieslint/rules/pair/duplicate-key/",
     "/propertieslint/rules/pair/key-name/",
-    "/propertieslint/rules/pair/missing-key/",
-    "/propertieslint/rules/pair/missing-value/",
+    "/propertieslint/rules/pair/no-duplicate-key/",
+    "/propertieslint/rules/pair/no-empty-key/",
+    "/propertieslint/rules/pair/no-empty-value/",
     "/propertieslint/rules/pair/",
-    "/propertieslint/rules/whitespace/duplicate-blank-line/",
+    "/propertieslint/rules/whitespace/entry-trimming/",
+    "/propertieslint/rules/whitespace/no-duplicate-blank-line/",
     "/propertieslint/rules/whitespace/no-leading-blank-line/",
     "/propertieslint/rules/whitespace/trailing-newline/",
-    "/propertieslint/rules/whitespace/untrimmed-entry/",
     "/propertieslint/rules/whitespace/",
     "/propertieslint/",
     "/propertieslint/book/",
@@ -24,8 +24,8 @@ const pages = [
     "/propertieslint/rules/",
     "/propertieslint/tags/",
     "/propertieslint/book.min.98c83e4c8e1c8661368bcb29bbaf4dcc9d31b8164f76aae322d82d86a9750c65.css",
-  "/propertieslint/en.search-data.min.b858a452a6e60089c21b87c87d21e235365bcbfffcac6eea1ba25738a911a708.json",
-  "/propertieslint/en.search.min.bdd1203f9e10005b6b2d6c8ff5eb48a149084cd6ba87553d074a3d79eabf0f2a.js",
+  "/propertieslint/en.search-data.min.4cb2dc4a6fad8deaa5e6c6149ffb0effee2f7a0f0cb9540c67360e664965debb.json",
+  "/propertieslint/en.search.min.e4e21abe3f4c7d3f3cf1ce2525909e96a673d90cc816a761752bfbdfd24d624e.js",
   
 ];
 

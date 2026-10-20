@@ -33,6 +33,7 @@
       <a href="#Issue">type Issue</a>
       <ul>
           <li><a href="#LintFile">func LintFile(path string, config Config) ([]Issue, error)</a></li>
+          <li><a href="#LintReader">func LintReader(path string, r io.Reader, config Config) ([]Issue, error)</a></li>
           </ul>
       </li>
   <li>
@@ -56,19 +57,19 @@
   <h4 id="Config">type Config</h4>
     
     <pre class="chroma"><span class="kd">type</span><span class="w"> </span><span class="nx">Config</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">	</span><span id="Config.CommentStyle"><span class="nx">CommentStyle</span></span><span class="w">             </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
-</span><span class="w">	</span><span id="Config.CommentSpaces"><span class="nx">CommentSpaces</span></span><span class="w">            </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
-</span><span class="w">	</span><span id="Config.DuplicateBlankLine"><span class="nx">DuplicateBlankLine</span></span><span class="w">       </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
-</span><span class="w">	</span><span id="Config.DuplicateKey"><span class="nx">DuplicateKey</span></span><span class="w">             </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
-</span><span class="w">	</span><span id="Config.InvalidEscape"><span class="nx">InvalidEscape</span></span><span class="w">            </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
-</span><span class="w">	</span><span id="Config.KeyName"><span class="nx">KeyName</span></span><span class="w">                  </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
-</span><span class="w">	</span><span id="Config.MissingKey"><span class="nx">MissingKey</span></span><span class="w">               </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
-</span><span class="w">	</span><span id="Config.MissingSeparator"><span class="nx">MissingSeparator</span></span><span class="w">         </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
-</span><span class="w">	</span><span id="Config.MissingValue"><span class="nx">MissingValue</span></span><span class="w">             </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
-</span><span class="w">	</span><span id="Config.NoLeadingBlankLine"><span class="nx">NoLeadingBlankLine</span></span><span class="w">       </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
-</span><span class="w">	</span><span id="Config.TrailingNewline"><span class="nx">TrailingNewline</span></span><span class="w">          </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
-</span><span class="w">	</span><span id="Config.UnterminatedContinuation"><span class="nx">UnterminatedContinuation</span></span><span class="w"> </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
-</span><span class="w">	</span><span id="Config.UntrimmedEntry"><span class="nx">UntrimmedEntry</span></span><span class="w">           </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.CommentStyle"><span class="nx">CommentStyle</span></span><span class="w">           </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.CommentSpacing"><span class="nx">CommentSpacing</span></span><span class="w">         </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.EntryTrimming"><span class="nx">EntryTrimming</span></span><span class="w">          </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.KeyName"><span class="nx">KeyName</span></span><span class="w">                </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.NoDanglingContinuation"><span class="nx">NoDanglingContinuation</span></span><span class="w"> </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.NoDuplicateBlankLine"><span class="nx">NoDuplicateBlankLine</span></span><span class="w">   </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.NoDuplicateKey"><span class="nx">NoDuplicateKey</span></span><span class="w">         </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.NoEmptyKey"><span class="nx">NoEmptyKey</span></span><span class="w">             </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.NoEmptyValue"><span class="nx">NoEmptyValue</span></span><span class="w">           </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.NoLeadingBlankLine"><span class="nx">NoLeadingBlankLine</span></span><span class="w">     </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.SeparatorStyle"><span class="nx">SeparatorStyle</span></span><span class="w">         </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.TrailingNewline"><span class="nx">TrailingNewline</span></span><span class="w">        </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
+</span><span class="w">	</span><span id="Config.ValidEscape"><span class="nx">ValidEscape</span></span><span class="w">            </span><a href="https://pkg.go.dev/builtin#bool"><span class="kt">bool</span></a><span class="w">
 </span><span class="p">}</span></pre>
     <h5 id="DefaultConfig">func DefaultConfig</h5>
   
@@ -78,16 +79,15 @@
   <pre class="chroma"><span class="kd">func</span><span class="w"> </span><span class="nf">LoadConfig</span><span class="p">(</span><span class="nx">path</span><span class="w"> </span><a href="https://pkg.go.dev/builtin#string"><span class="kt">string</span></a><span class="p">)</span><span class="w"> </span><span class="p">(</span><a href="#Config"><span class="nx">Config</span></a><span class="p">,</span><span class="w"> </span><a href="https://pkg.go.dev/builtin#error"><span class="kt">error</span></a><span class="p">)</span></pre>
   <h4 id="Issue">type Issue</h4>
     
-    <pre class="chroma"><span class="kd">type</span><span class="w"> </span><span class="nx">Issue</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">	</span><span id="Issue.Path"><span class="nx">Path</span></span><span class="w">    </span><a href="https://pkg.go.dev/builtin#string"><span class="kt">string</span></a><span class="w">
-</span><span class="w">	</span><span id="Issue.Line"><span class="nx">Line</span></span><span class="w">    </span><a href="https://pkg.go.dev/builtin#int"><span class="kt">int</span></a><span class="w">
-</span><span class="w">	</span><span id="Issue.Column"><span class="nx">Column</span></span><span class="w">  </span><a href="https://pkg.go.dev/builtin#int"><span class="kt">int</span></a><span class="w">
-</span><span class="w">	</span><span id="Issue.Message"><span class="nx">Message</span></span><span class="w"> </span><a href="https://pkg.go.dev/builtin#string"><span class="kt">string</span></a><span class="w">
-</span><span class="p">}</span></pre>
+    <pre class="chroma"><span class="kd">type</span><span class="w"> </span><span class="nx">Issue</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><a href="rules"><span class="nx">rules</span></a><span class="p">.</span><a href="rules#Issue"><span class="nx">Issue</span></a></pre>
     <h5 id="LintFile">func LintFile</h5>
   
   <pre class="chroma"><span class="kd">func</span><span class="w"> </span><span class="nf">LintFile</span><span class="p">(</span><span class="nx">path</span><span class="w"> </span><a href="https://pkg.go.dev/builtin#string"><span class="kt">string</span></a><span class="p">,</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><a href="#Config"><span class="nx">Config</span></a><span class="p">)</span><span class="w"> </span><span class="p">([]</span><a href="#Issue"><span class="nx">Issue</span></a><span class="p">,</span><span class="w"> </span><a href="https://pkg.go.dev/builtin#error"><span class="kt">error</span></a><span class="p">)</span></pre>
-  <h4 id="Result">type Result</h4>
+  <h5 id="LintReader">func LintReader</h5>
+  
+  <pre class="chroma"><span class="kd">func</span><span class="w"> </span><span class="nf">LintReader</span><span class="p">(</span><span class="nx">path</span><span class="w"> </span><a href="https://pkg.go.dev/builtin#string"><span class="kt">string</span></a><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><a href="https://pkg.go.dev/io"><span class="nx">io</span></a><span class="p">.</span><a href="https://pkg.go.dev/io#Reader"><span class="nx">Reader</span></a><span class="p">,</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><a href="#Config"><span class="nx">Config</span></a><span class="p">)</span><span class="w"> </span><span class="p">([]</span><a href="#Issue"><span class="nx">Issue</span></a><span class="p">,</span><span class="w"> </span><a href="https://pkg.go.dev/builtin#error"><span class="kt">error</span></a><span class="p">)</span></pre>
+  <p>LintReader reports rule violations in a properties stream.
+<h4 id="Result">type Result</h4>
     
     <pre class="chroma"><span class="kd">type</span><span class="w"> </span><span class="nx">Result</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">	</span><span id="Result.CheckedFiles"><span class="nx">CheckedFiles</span></span><span class="w"> </span><a href="https://pkg.go.dev/builtin#int"><span class="kt">int</span></a><span class="w">
@@ -96,7 +96,17 @@
     <h5 id="Targets">func Targets</h5>
   
   <pre class="chroma"><span class="kd">func</span><span class="w"> </span><span class="nf">Targets</span><span class="p">(</span><span class="nx">paths</span><span class="w"> </span><span class="p">[]</span><a href="https://pkg.go.dev/builtin#string"><span class="kt">string</span></a><span class="p">,</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><a href="#Config"><span class="nx">Config</span></a><span class="p">)</span><span class="w"> </span><span class="p">(</span><a href="#Result"><span class="nx">Result</span></a><span class="p">,</span><span class="w"> </span><a href="https://pkg.go.dev/builtin#error"><span class="kt">error</span></a><span class="p">)</span></pre>
-  </main>
+  <h3 id="pkg-directories">Directories</h3>
+
+<table>
+  <tbody>
+    <tr>
+        <td><a href="rules">rules</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+</table>
+</main>
     <hr>
     <footer>
       <small id="generated-by-footer">

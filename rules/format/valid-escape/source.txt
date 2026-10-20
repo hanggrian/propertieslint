@@ -1,0 +1,34 @@
+propertieslint
+
+- Comment Spacing: https://hanggrian.github.io/propertieslint/rules/comment/comment-spacing/
+- Comment Style: https://hanggrian.github.io/propertieslint/rules/comment/comment-style/
+- No Dangling Continuation: https://hanggrian.github.io/propertieslint/rules/format/no-dangling-continuation/
+- Separator Style: https://hanggrian.github.io/propertieslint/rules/format/separator-style/
+- Valid Escape: https://hanggrian.github.io/propertieslint/rules/format/valid-escape/
+- Key Name: https://hanggrian.github.io/propertieslint/rules/pair/key-name/
+- No Duplicate Key: https://hanggrian.github.io/propertieslint/rules/pair/no-duplicate-key/
+- No Empty Key: https://hanggrian.github.io/propertieslint/rules/pair/no-empty-key/
+- No Empty Value: https://hanggrian.github.io/propertieslint/rules/pair/no-empty-value/
+- Entry Trimming: https://hanggrian.github.io/propertieslint/rules/whitespace/entry-trimming/
+- No Duplicate Blank Line: https://hanggrian.github.io/propertieslint/rules/whitespace/no-duplicate-blank-line/
+- No Leading Blank Line: https://hanggrian.github.io/propertieslint/rules/whitespace/no-leading-blank-line/
+- Trailing Newline: https://hanggrian.github.io/propertieslint/rules/whitespace/trailing-newline/
+
+
+# Valid escape
+
+Entries must have valid escape sequences. For example, unicode escapes must
+include four hexadecimal digits (`\u1234`, not `\u123`).
+
+**Before &#10060;**
+
+```
+unicode=\u123
+```
+
+**After &#9989;**
+
+```
+unicode=\u1234
+```
+

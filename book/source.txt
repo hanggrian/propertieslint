@@ -1,28 +1,29 @@
 propertieslint
 
-- Comment Spaces: https://hanggrian.github.io/propertieslint/rules/comment/comment-spaces/
+- Comment Spacing: https://hanggrian.github.io/propertieslint/rules/comment/comment-spacing/
 - Comment Style: https://hanggrian.github.io/propertieslint/rules/comment/comment-style/
-- Invalid Escapes: https://hanggrian.github.io/propertieslint/rules/format/invalid-escapes/
-- Missing Separator: https://hanggrian.github.io/propertieslint/rules/format/missing-separator/
-- Unterminated Line Continuation: https://hanggrian.github.io/propertieslint/rules/format/unterminated-line-continuation/
-- Duplicate Key: https://hanggrian.github.io/propertieslint/rules/pair/duplicate-key/
+- No Dangling Continuation: https://hanggrian.github.io/propertieslint/rules/format/no-dangling-continuation/
+- Separator Style: https://hanggrian.github.io/propertieslint/rules/format/separator-style/
+- Valid Escape: https://hanggrian.github.io/propertieslint/rules/format/valid-escape/
 - Key Name: https://hanggrian.github.io/propertieslint/rules/pair/key-name/
-- Missing Key: https://hanggrian.github.io/propertieslint/rules/pair/missing-key/
-- Missing Value: https://hanggrian.github.io/propertieslint/rules/pair/missing-value/
-- Duplicate Blank Line: https://hanggrian.github.io/propertieslint/rules/whitespace/duplicate-blank-line/
+- No Duplicate Key: https://hanggrian.github.io/propertieslint/rules/pair/no-duplicate-key/
+- No Empty Key: https://hanggrian.github.io/propertieslint/rules/pair/no-empty-key/
+- No Empty Value: https://hanggrian.github.io/propertieslint/rules/pair/no-empty-value/
+- Entry Trimming: https://hanggrian.github.io/propertieslint/rules/whitespace/entry-trimming/
+- No Duplicate Blank Line: https://hanggrian.github.io/propertieslint/rules/whitespace/no-duplicate-blank-line/
 - No Leading Blank Line: https://hanggrian.github.io/propertieslint/rules/whitespace/no-leading-blank-line/
 - Trailing Newline: https://hanggrian.github.io/propertieslint/rules/whitespace/trailing-newline/
-- Untrimmed Entry: https://hanggrian.github.io/propertieslint/rules/whitespace/untrimmed-entry/
 
 
-# Comment spaces
+# Comment spacing
 
-Comments must have no space before and exactly one space after `#`.
+Comments must have no leading whitespace and exactly one space after `#`.
 
 **Before &#10060;**
 
 ```
- #You are reading a comment
+ # You are reading a comment
+#You are reading a comment
 ```
 
 **After &#9989;**
@@ -49,46 +50,11 @@ Use `#` for comments.
 ```
 
 
-# Invalid escape
+# No dangling continuation
 
-Entries with invalid escape sequences. This includes short unicode escapes (e.g.
-`\u123`), invalid octal escapes (e.g. `\8`), and invalid single-character
-escapes (e.g. `\x`).
-
-**Before &#10060;**
-
-```
-unicode=\u123
-```
-
-**After &#9989;**
-
-```
-unicode=\u1234
-```
-
-
-# Missing separator
-
-Entries must have either `=` or `:` separators.
-
-**Before &#10060;**
-
-```
-key value
-```
-
-**After &#9989;**
-
-```
-key=value
-```
-
-
-# Unterminated line continuation
-
-Entries with unterminated line continuations. Line continuations must end with a
-backslash (`\`) followed by a newline.
+Files cannot end with a dangling line continuation. A backslash (`\`) at the
+end of a line continues the entry onto the next line, so it must be followed by
+one.
 
 **Before &#10060;**
 
@@ -108,22 +74,38 @@ escape=this is backslash \\
 ```
 
 
-# Duplicate key
+# Separator style
 
-Duplicate keys are not allowed.
+Entries must use `=` as the key/value separator.
 
 **Before &#10060;**
 
 ```
-item=value
-item=other
+key:value
 ```
 
 **After &#9989;**
 
 ```
-item1=value
-item2=other
+key=value
+```
+
+
+# Valid escape
+
+Entries must have valid escape sequences. For example, unicode escapes must
+include four hexadecimal digits (`\u1234`, not `\u123`).
+
+**Before &#10060;**
+
+```
+unicode=\u123
+```
+
+**After &#9989;**
+
+```
+unicode=\u1234
 ```
 
 
@@ -148,9 +130,28 @@ database.user=admin
 ```
 
 
-# Missing key
+# No duplicate key
 
-Entries must have a key.
+Duplicate keys are not allowed.
+
+**Before &#10060;**
+
+```
+item=value
+item=other
+```
+
+**After &#9989;**
+
+```
+item1=value
+item2=other
+```
+
+
+# No empty key
+
+Keys cannot be empty.
 
 **Before &#10060;**
 
@@ -165,9 +166,9 @@ item=value
 ```
 
 
-# Missing value
+# No empty value
 
-Entries must have a value.
+Values cannot be empty.
 
 **Before &#10060;**
 
@@ -182,9 +183,26 @@ item=value
 ```
 
 
-# Duplicate blank line
+# Entry trimming
 
-Multiple consecutive blank lines are not allowed.
+Keys and values cannot have leading or trailing whitespace.
+
+**Before &#10060;**
+
+```
+ item = value
+```
+
+**After &#9989;**
+
+```
+item=value
+```
+
+
+# No duplicate blank line
+
+Consecutive blank lines are not allowed.
 
 **Before &#10060;**
 
@@ -237,22 +255,5 @@ item=value
 ```
 item=value
 ↵
-```
-
-
-# Untrimmed entry
-
-Entries cannot have leading or trailing whitespace in keys or values.
-
-**Before &#10060;**
-
-```
- item = value
-```
-
-**After &#9989;**
-
-```
-item=value
 ```
 
