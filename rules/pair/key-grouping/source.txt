@@ -1,0 +1,45 @@
+propertieslint
+
+- Comment Spacing: http://localhost:1313/propertieslint/rules/comment/comment-spacing/
+- Comment Style: http://localhost:1313/propertieslint/rules/comment/comment-style/
+- No Dangling Continuation: http://localhost:1313/propertieslint/rules/format/no-dangling-continuation/
+- Separator Style: http://localhost:1313/propertieslint/rules/format/separator-style/
+- Valid Escape: http://localhost:1313/propertieslint/rules/format/valid-escape/
+- Key Grouping: http://localhost:1313/propertieslint/rules/pair/key-grouping/
+- Key Name: http://localhost:1313/propertieslint/rules/pair/key-name/
+- Key Order: http://localhost:1313/propertieslint/rules/pair/key-order/
+- No Duplicate Key: http://localhost:1313/propertieslint/rules/pair/no-duplicate-key/
+- No Empty Key: http://localhost:1313/propertieslint/rules/pair/no-empty-key/
+- No Empty Value: http://localhost:1313/propertieslint/rules/pair/no-empty-value/
+- Entry Trimming: http://localhost:1313/propertieslint/rules/whitespace/entry-trimming/
+- No Duplicate Blank Line: http://localhost:1313/propertieslint/rules/whitespace/no-duplicate-blank-line/
+- No Leading Blank Line: http://localhost:1313/propertieslint/rules/whitespace/no-leading-blank-line/
+- Trailing Newline: http://localhost:1313/propertieslint/rules/whitespace/trailing-newline/
+
+
+# Key grouping
+
+Keys sharing the same prefix before the first `.` or `-` must be grouped
+together and separated from other groups with a blank line. Keys without a
+separator are not grouped.
+
+**Before &#10060;**
+
+```
+one.one=value
+two.one=value
+one.two=value
+
+two.two=value
+```
+
+**After &#9989;**
+
+```
+one.one=value
+one.two=value
+
+two.one=value
+two.two=value
+```
+
