@@ -4,5 +4,5 @@ lint = "stylebook ."
 [dependency-groups]
 dev = [
   "poethepoet",
-  "stylebook",
+  "stylebook[taplo,yamllint]==0.3.2",
 ]

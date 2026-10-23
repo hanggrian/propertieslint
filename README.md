@@ -32,15 +32,35 @@ propertieslint some_file.properties ./some_dir
 >
 > All rules are enabled by default.
 
-For example, to disable certain rules, refer to the rule ID within group name
+For example, to disable certain rules, refer to the rule ID within its group
 and set it to `false`. To disable all rules in a group, set the group name to
-`false`.
+`false`. The available groups and rules are:
 
 ```json
 {
   "comment": {
-    "comment-spacing": false
+    "comment-style": true,
+    "comment-spacing": true,
+    "comment-trimming": true,
+    "no-empty-comment": true
   },
-  "format": false
+  "format": {
+    "no-dangling-continuation": true,
+    "separator-style": true,
+    "valid-escape": true
+  },
+  "pair": {
+    "key-name": true,
+    "key-order": true,
+    "no-duplicate-key": true,
+    "no-empty-key": true,
+    "no-empty-value": true
+  },
+  "whitespace": {
+    "entry-trimming": true,
+    "no-duplicate-blank-line": true,
+    "no-leading-blank-line": true,
+    "trailing-newline": true
+  }
 }
 ```
